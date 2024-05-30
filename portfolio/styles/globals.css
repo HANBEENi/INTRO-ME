@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+body {
+    overflow-x: hidden;
+    
+}
+
+@font-face{
+    font-family: "ONEMobileTitle";
+    font-weight:200;
+    src: url('/fonts/ONEMobileTitle.ttf') format("truetype");
+}
+
+@font-face{
+    font-family: "GmarketSansTTFLight";
+    font-weight:200;
+    src: url('/fonts/GmarketSansTTFLight.ttf') format("truetype");
+}
+
