@@ -146,12 +146,6 @@ const Card3D = () => {
     if (controlRef.current) {
 
       controlRef.current.reset(); // 카메라 상태를 초기화
-
-      // controlRef.current.object.rotation.set(0, 0, 0);
-      // controlRef.current.target.set(0, 0, 0);
-      // controlRef.current.object.position.set(0, 0, 8.5);
-      controlRef.current.update();
-
     }
   }, []);
 
@@ -165,7 +159,7 @@ const Card3D = () => {
         ref={controlRef}
         enableZoom={false}
         onEnd={handleEndDrag}
-        // enableDamping={false}
+        enableDamping={false}
       />
     </Canvas>
   );

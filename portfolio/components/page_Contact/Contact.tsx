@@ -1,11 +1,9 @@
 import HomeLayout from "@/components/layout/HomeLayout";
 import styled from "styled-components";
-import { EmailSVG, GithubDarkSVG, GithubLightSVG, NotionSVG, OpenKakaoSVG, PhotoSVG } from "@/public/SVG/ContectSVG";
 import dynamic from "next/dynamic";
 
 const backgroundColor = '#ececec';
 const Card3D = dynamic(() => import("@/components/page_Contact/Card3d"), { ssr: false });
-
 
 const Contact = () => {
     return(
