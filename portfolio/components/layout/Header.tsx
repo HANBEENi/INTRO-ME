@@ -21,6 +21,10 @@ const Header = ({backgroundColor, color, showHeader}:Props) => {
                     <Text3><div><div id="dot" style={{backgroundColor:color}}></div></div></Text3>
                 </Logo>
                 <MenuBar>
+                    <DarkMode>
+                        <div className='modeName'>DARK</div>
+                        <div className='icon'></div>
+                    </DarkMode>
                     <li>INTRO</li>
                     <li onClick={()=>router.push(`/project`)}>PROJECT</li>
                     <li onClick={()=>router.push(`/skill`)}>SKILL</li>
@@ -112,12 +116,13 @@ const Text3 = styled.div`
 
 const MenuBar = styled.ul`
     display: flex;
+    align-items: center;
     gap: 40px;
 
     font-size: 1.25rem;
 
     /** [TODO]임시 */
-    & :nth-child(2), :nth-child(3), :nth-child(5){
+    & :nth-child(3), :nth-child(4), :nth-child(6){
         &:hover{
             color: #ff264a;
         }
@@ -128,8 +133,42 @@ const MenuBar = styled.ul`
 
 
         &:hover{
-            /* color: #fff; */
+
         }
         cursor: pointer;
     }
+`;
+
+const DarkMode = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    width: 120px;
+    height: 45px;
+
+    background-color: #000;
+    border-radius: 30px;
+
+    color: #fff;
+    font-size: 0.875rem;
+
+    & .modeName {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    & .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 100%;
+
+        background-color: #fff;
+        border-radius: 30px;
+    }
+
+    cursor: pointer;
 `;
