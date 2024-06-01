@@ -2,10 +2,11 @@ import HomeLayout from "@/components/layout/HomeLayout";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 
-const backgroundColor = '#000000';
 const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/page_Contact/Dark_Card3D_SizeFeat"), { ssr: false });
+const backgroundColor = '#000000';
 
 const Dark_Contact = () => {
+
     return(
         <HomeLayout backgroundColor={backgroundColor} headerBackgroundColor="#1a1a1a" color="#fff">
             <Container style={{backgroundColor:backgroundColor}}>
@@ -21,7 +22,15 @@ const Dark_Contact = () => {
                     </div>
                 </Title>
                 <Contents>
-                    <Dark_Card3D_SizeFeat/>
+                    <div className="card3D">
+                        <Dark_Card3D_SizeFeat/>
+                    </div>
+                    <HowContect>
+                        <div style={{backgroundColor:'#000', color:'#fff'}}>E-mail</div>
+                        <div style={{backgroundColor:'#000', color:'#fff'}}>GitHub</div>
+                        <div style={{backgroundColor:'#000', color:'#fff'}}>Notion</div>
+                        <div style={{backgroundColor:'#000', color:'#fff'}}>OpenKakao</div>
+                    </HowContect>
                 </Contents>
             </Container>
         </HomeLayout>
@@ -58,6 +67,8 @@ const BackText = styled.div`
     -webkit-text-stroke: 1px #5d5d5d;
     font-size: 290px;
     line-height: 250px;
+
+    pointer-events: none;
 `;
 
 const Title = styled.div`
@@ -93,4 +104,33 @@ const Contents = styled.div`
     border-radius: 15px;
 
     color: #fff;
+
+    & .card3D {
+        width: 100%;
+        min-height: 500px;
+        height: 100%;
+    }
+`;
+
+const HowContect = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    height: 10px;
+
+    font-size: 1.25rem;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150px;
+        height: 50px;
+
+        border-radius: 8px;
+        border: 1px solid #fff;
+
+        cursor: pointer;
+    }
 `;

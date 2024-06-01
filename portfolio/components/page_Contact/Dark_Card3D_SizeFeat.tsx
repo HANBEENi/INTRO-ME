@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame, useLoader, useThree} from '@react-three/fiber';
-import { MeshReflectorMaterial, OrbitControls, Reflector, RoundedBox, Text, meshBounds } from '@react-three/drei';
+import { MeshReflectorMaterial, OrbitControls, RoundedBox, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 extend({GridHelper: THREE.GridHelper});
@@ -46,13 +46,13 @@ const HowContact = () => {
         Phone
       </Text>
       <Text position={[-3.6, 1.2, 0.3]} fontSize={fontSize} fontWeight={300} letterSpacing={0.05} color="#000" anchorX="left" anchorY="middle">
-        010 - 9857 - 2619
+        010 - 0000 - 0000
       </Text>
       <Text position={[-5, 0.4, 0.3]} fontSize={fontSize} fontWeight={600} letterSpacing={0.05} color="#000" anchorX="left" anchorY="middle">
         E-mail
       </Text>
       <Text position={[-3.6, 0.4, 0.3]} fontSize={fontSize} fontWeight={300} letterSpacing={0.05} color="#000" anchorX="left" anchorY="middle">
-        gksqls0507@gmail.com
+        email@email.com
       </Text>
       <group position={[0, 0.1, 0.15]}>
         <Icon 
@@ -95,6 +95,48 @@ const HowContact = () => {
 const Card = () => {
   const cardRef = useRef<THREE.Group>(null);
 
+  const [rotationActive, setRotationActive] = useState<boolean>(true);
+  const [time, setTime] = useState<number>(0);
+
+  // 초기 회전값
+  useLayoutEffect(() => {
+    if (cardRef.current) {
+      cardRef.current.rotation.set(-Math.PI/2, 0, 0);
+    }
+  }, []);
+
+  useFrame((state, delta) => {
+    setTime((prev) => prev + delta);
+
+    // 회전 진행
+    setTimeout(() => {
+      if (rotationActive && cardRef.current) {
+        if (time <= 0.7){
+          cardRef.current.rotation.y -= delta * 1.8; // Y축을 기준으로 회전
+        }
+        if (time>0.7 && time<1){
+          cardRef.current.rotation.y -= delta * 0.05; // Y축을 기준으로 회전
+        }
+        if (time>=1 && time<1.4){
+          cardRef.current.rotation.y -= delta * 0.05; // Y축을 기준으로 회전
+          cardRef.current.rotation.x += delta * 1; // X축을 기준으로 회전
+        }
+        if (time >= 1.4){
+          setRotationActive(true);
+          cardRef.current.rotation.x += delta * 1; // X축을 기준으로 회전
+          cardRef.current.rotation.y += (delta) * 1.5;
+        }
+        if (time >= 2){
+          setRotationActive(false);
+        }
+      }
+    },1000);
+    // 회전 끝나고 제자리 위치
+    if(!rotationActive && cardRef.current){
+      cardRef.current.rotation.set(0, 0, 0);
+    }
+  });
+
   return (
     <group ref={cardRef} position={[0, 0, 0]}>
       <RoundedBox 
@@ -120,7 +162,7 @@ const Card = () => {
         />
       </RoundedBox>
       <Text position={[-5.5, 2.3, 0.3]} fontSize={0.5} letterSpacing={0.05} fontWeight={500} maxWidth={10} color="#000" anchorX="left" anchorY="middle">
-        김한빈
+        Name
       </Text>
       <Text position={[-5.5, 1.5, 0.3]} fontSize={0.38} letterSpacing={0.05} fontWeight={600} maxWidth={10} color="#000" anchorX="left" anchorY="middle">
         Frontend Developer
@@ -134,7 +176,6 @@ const Card = () => {
           transparent={true}
         />
       </mesh>
-      
     </group>
   );
 };
