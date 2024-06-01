@@ -60,6 +60,16 @@ const HomeLayout = ({children, backgroundColor, headerBackgroundColor, color}:Ho
                 showHeader={isShowHeader}
             />
             <Content isScreenTop={isScreenTop} style={{backgroundColor:backgroundColor??'#fff'}}>{children}</Content>
+            <Footer style={{backgroundColor:headerBackgroundColor}}>
+                <div>
+                    © 2024 KIMHANBEEN PORTFOLIO. All rights reserved.<br/>
+                    이 웹사이트는 상업적 목적 없이 개인 포트폴리오를 위해 제작되었습니다.<br/>
+                    본 사이트의 모든 내용은 개인적 용도로만 제공됩니다.<br/>
+                    Developed by KIMHANBEEN | Contact: email@example.com<br/>
+                    홈 | 프로젝트 | 블로그 | 연락처<br/>
+                    Last updated: June 1, 2024
+                </div>
+            </Footer>
         </Layout>
     );
 };
@@ -70,7 +80,6 @@ const Layout = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    position: absolute;
     width: 100%;
     min-height: calc(100vh + 100px);
     height: 100%;
@@ -79,15 +88,24 @@ const Layout = styled.div`
 const Content = styled.div<{isScreenTop:boolean}>`
     display: flex;
     justify-content: center;
-    position: relative;
-    top: ${({isScreenTop})=>(isScreenTop?'180px':'100px')};
+    padding-top: ${({isScreenTop})=>(isScreenTop?'180px':'100px')};
     padding-bottom: 200px;
     min-width: 100vw;
     width: 100%;
 
-    transition: top 0.5s ease;
+    transition: padding-top 0.5s ease;
 
     ${media.tablet}{
         padding: 0px 20px;
     }
+`;
+
+const Footer = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+
+    color: #fff;
 `;
