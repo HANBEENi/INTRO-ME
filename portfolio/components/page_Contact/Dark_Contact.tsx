@@ -121,6 +121,8 @@ const BackText = styled.div`
     white-space: nowrap;
     z-index: 0;
 
+    -webkit-text-stroke: 1px #5d5d5d;
+    -webkit-text-fill-color: 'transparent';
     font-size: 290px;
     line-height: 250px;
 
