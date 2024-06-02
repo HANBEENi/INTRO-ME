@@ -127,6 +127,7 @@ const BackText = styled.div`
     line-height: 250px;
 
     pointer-events: none;
+    user-select: none;
 `;
 
 const Title = styled.div`
