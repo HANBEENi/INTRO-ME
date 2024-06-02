@@ -1,19 +1,71 @@
 import HomeLayout from "@/components/layout/HomeLayout";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
+import { useEffect, useRef } from "react";
+import gsap from 'gsap';
 
 const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/page_Contact/Dark_Card3D_SizeFeat"), { ssr: false });
 const backgroundColor = '#000000';
 
 const Dark_Contact = () => {
 
+    /** BackText 애니메이션 효과 */
+    // 각 Text 컴포넌트에 대한 참조를 저장
+    const textRefs = useRef<(HTMLElement | null)[]>([]);
+    textRefs.current = [];
+
+    // Text 컴포넌트에 Ref를 추가
+    const addTextRefs = (el:HTMLElement|null) => {
+        if (el && !textRefs.current.includes(el)){
+            textRefs.current.push(el);
+        }
+    }
+
+    useEffect(() => {
+        textRefs.current.forEach((text, index) => {
+            gsap.fromTo(text, 
+                // from(초기 상태)
+                {
+                    WebkitTextFillColor: 'transparent',
+                    WebkitTextStrokeColor: '#5d5d5d',
+                }, 
+                // to(최종 상태)
+                {
+                    WebkitTextFillColor: '#fff',
+                    delay: index * 0.5,
+                    duration: 2,
+                    ease: 'power2.inOut',
+                    clipPath: 'inset(0 100% 0 0)',
+                    // 스크롤 트리거 지금은 사용 보류
+                    // scrollTrigger: {
+                    //     trigger: text,
+                    //     start: 'top 20%',
+                    //     end: 'top 80%',
+                    //     scrub: true,
+                    // },
+                    onUpdate: function () {
+                        const progress = this.progress();
+                        const clipPathValue = `inset(0 ${100 - (progress * 100)}% 0 0)`;
+                        (text!.style as any).clipPath = clipPathValue;
+                        (text!.style as any).WebkitClipPath = clipPathValue;
+                    },
+                    onComplete: function () {
+                        gsap.to(text, {
+                            WebkitTextStrokeColor: '#5d5d5d', // 테두리 색상을 원래 색상으로 설정
+                            WebkitTextFillColor: 'transparent',
+                            clipPath: 'inset(0 0 0 0)', // 텍스트를 다시 왼쪽에서 오른쪽으로 채우기
+                            duration: 2,
+                            ease: 'power2.inOut',
+                        });
+                    }
+                }
+            );
+        });
+    }, []);
+
     return(
         <HomeLayout backgroundColor={backgroundColor} headerBackgroundColor="#1a1a1a" color="#fff">
             <Container style={{backgroundColor:backgroundColor}}>
-                <BackText>
-                    <div>CONTACT</div>
-                    <div>INFO</div>
-                </BackText>
                 <Title>
                     <div>CONTACT</div>
                     <div>
@@ -25,6 +77,10 @@ const Dark_Contact = () => {
                     <div className="card3D">
                         <Dark_Card3D_SizeFeat/>
                     </div>
+                    <BackText>
+                            <div ref={addTextRefs} className='backText'>CONTACT</div>
+                            <div ref={addTextRefs} className='backText'>INFO</div>
+                    </BackText>
                     <HowContect>
                         <div style={{backgroundColor:'#000', color:'#fff'}}>E-mail</div>
                         <div style={{backgroundColor:'#000', color:'#fff'}}>GitHub</div>
@@ -44,7 +100,6 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
     padding-bottom: 50px;
     width: 100%;
     max-width: 1200px;
@@ -61,10 +116,11 @@ const BackText = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 150px;
+    top: 45%;
+    transform: translateY(-50%);
+    white-space: nowrap;
     z-index: 0;
 
-    -webkit-text-stroke: 1px #5d5d5d;
     font-size: 290px;
     line-height: 250px;
 
@@ -78,7 +134,6 @@ const Title = styled.div`
     align-items: center;
     gap: 20px;
     width: 100%;
-    z-index: 100;
 
     color: #fff;
     font-size: 2.5rem;
@@ -98,6 +153,7 @@ const Contents = styled.div`
     justify-content: center;
     align-items: center;
     padding-bottom: 100px;
+    position: relative;
     width: 100%;
     aspect-ratio: 650/363;
 
@@ -106,9 +162,12 @@ const Contents = styled.div`
     color: #fff;
 
     & .card3D {
+        display: flex;
+        justify-content: center;
         width: 100%;
         min-height: 500px;
         height: 100%;
+        z-index: 300;
     }
 `;
 
