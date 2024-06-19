@@ -1,10 +1,8 @@
-import HomeLayout from "@/components/layout/HomeLayout";
 import styled, { keyframes } from 'styled-components';
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
-import { CSSSVG, EmotionLightSVG, HTMLSVG, JSSVG, NextJSDarkSVG, ReactLightSVG, SassSVG, StyleComponentsSVG, TypeScriptSVG } from "@/public/SVG/Skills/FrontendSVG";
+import { CSSSVG, EmotionLightSVG, HTMLSVG, JSSVG, NextJSDarkSVG, ReactLightSVG, SassSVG, StyleComponentsSVG, TypeScriptSVG } from "@/public/SVG/SkillsIcon/FrontendSVG";
 
-const D3Chart = dynamic(()=>import('@/components/page_Skill/D3Chart'),{ssr:false});
+const D3Chart = dynamic(()=>import('@/components/section_modules/Skills_D3Chart'),{ssr:false});
 
 /** DATA: 원형 차트에 들어갈 SKILLS 분류별 데이터 */
 const chartData_FrontEnd = [
@@ -29,13 +27,10 @@ const chartData_Comunity = [
     {category: "POTOSHOP", value: 80, color: "#e35fe8"},
 ]
 
-const backgroundColor = "#000";
-
-const Skill02 = () => {
+const Skills = () => {
 
     return (
-        <HomeLayout backgroundColor={backgroundColor} headerBackgroundColor="#1a1a1a" color="#fff">
-            <Container style={{backgroundColor:backgroundColor}}>
+            <Container>
                 <Title>
                     <div className="title">TECH SKILLS</div>
                     <div className="subTitle">
@@ -89,11 +84,10 @@ const Skill02 = () => {
                     </PartSet>
                 </Content>
             </Container>
-        </HomeLayout>
     )
 }
 
-export default Skill02;
+export default Skills;
 
 const spin3D = keyframes`
     0% {

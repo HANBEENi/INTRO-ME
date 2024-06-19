@@ -5,26 +5,42 @@ import * as THREE from 'three';
 
 extend({GridHelper: THREE.GridHelper});
 
-const Icon = ({ position, color, textureUrl, isHovered, onPointerOver, onPointerOut }:any) => {
+const Icon = ({ position, color, textureUrl, isHovered, onPointerOver, onPointerOut, onClick, label }:any) => {
     const { gl } = useThree();
     const texture = useLoader(THREE.TextureLoader, textureUrl);
 
   return (
-    <mesh 
-      position={position} 
-      scale={isHovered ? 1.5 : 1}
-      onPointerOver={(e)=>{
-        onPointerOver(e);
-        gl.domElement.style.cursor = 'pointer';
-      }}
-      onPointerOut={(e)=>{
-        onPointerOut(e);
-        gl.domElement.style.cursor = 'default';
-      }}
-    >
-      <circleGeometry args={[0.35, 32]} />
-      <meshBasicMaterial color={color} map={texture as any}/>
-    </mesh>
+    <group>
+      <mesh 
+        position={position} 
+        scale={isHovered ? 1.5 : 1}
+        onPointerOver={(e)=>{
+          onPointerOver(e);
+          gl.domElement.style.cursor = 'pointer';
+        }}
+        onPointerOut={(e)=>{
+          onPointerOut(e);
+          gl.domElement.style.cursor = 'default';
+        }}
+        onClick={onClick}
+      >
+        <circleGeometry args={[0.35, 32]} />
+        <meshBasicMaterial color={color} map={texture as any}/>
+      </mesh>
+      {isHovered && (
+        <Text 
+          position={[position[0]-0.45, position[1]-0.9, position[2]]} 
+          fontSize={0.25} 
+          fontWeight={500} 
+          letterSpacing={0.05} 
+          color="#000" 
+          anchorX="left" 
+          anchorY="middle"
+        >
+          {label}
+        </Text>
+      )}
+    </group>
   );
 };
 
@@ -33,12 +49,17 @@ const HowContact = () => {
   
   const fontSize = 0.35;
 
-  const handlePointerOver = (index: number) => {
+  const handlePointerOver = (index: number, label: string) => {
     setHoveredIndex(index);
+    console.log(label);
   };
   const handlePointerOut = () => {
     setHoveredIndex(null);
   };
+
+  const handleIconClick = (url: string) => {
+    window.open(url, '_blank');
+  }
 
   return (
     <group position={[-0.5, -1.35, 0]}>
@@ -60,32 +81,40 @@ const HowContact = () => {
           color="#b7ff44" 
           textureUrl={'/images/emailIcon.png'}
           isHovered={hoveredIndex === 0}
-          onPointerOver={()=>handlePointerOver(0)}
+          onPointerOver={()=>handlePointerOver(0, 'E-mail')}
           onPointerOut={handlePointerOut}
+          onClick={()=>handleIconClick('/')}
+          label='메일 보내기'
         />
         <Icon 
           position={[-3.68, -1, 0]} 
           color="#ffffff" 
           textureUrl={'/images/githubIcon1.png'}
           isHovered={hoveredIndex === 1}
-          onPointerOver={()=>handlePointerOver(1)}
+          onPointerOver={()=>handlePointerOver(1, 'GitHub')}
           onPointerOut={handlePointerOut}
+          onClick={()=> handleIconClick('/')}
+          label='깃헙 링크'
         />
         <Icon 
           position={[-2.58, -1, 0]} 
           color="#8b8b8b" 
           textureUrl={'/images/notionIcon.png'}
           isHovered={hoveredIndex === 2}
-          onPointerOver={()=>handlePointerOver(2)}
+          onPointerOver={()=>handlePointerOver(2, 'Notion')}
           onPointerOut={handlePointerOut}
+          onClick={()=> handleIconClick('/')}
+          label='노션 링크'
         />
         <Icon 
           position={[-1.48, -1, 0]} 
           color="#ffca28" 
           textureUrl={'/images/openkakaoIcon.png'}
           isHovered={hoveredIndex === 3}
-          onPointerOver={()=>handlePointerOver(3)}
+          onPointerOver={()=>handlePointerOver(3, 'OpenKakao')}
           onPointerOut={handlePointerOut}
+          onClick={()=> handleIconClick('http://localhost:3000/skill')}
+          label='오픈카카오 바로가기'
         />
       </group>
     </group>

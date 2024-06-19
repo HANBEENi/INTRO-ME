@@ -1,11 +1,12 @@
-import HomeLayout from "@/components/layout/HomeLayout";
+import HomeLayout from "@/components/layout/Site";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import gsap from 'gsap';
 
-const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/page_Contact/Dark_Card3D_SizeFeat"), { ssr: false });
+const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/Contact_Card3D(D)"), { ssr: false });
 const backgroundColor = '#000000';
+const background = 'linear-gradient(180deg, #000, #1a1a1a)';
 
 const Dark_Contact = () => {
 
@@ -27,7 +28,7 @@ const Dark_Contact = () => {
                 // from(초기 상태)
                 {
                     WebkitTextFillColor: 'transparent',
-                    WebkitTextStrokeColor: '#5d5d5d',
+                    WebkitTextStrokeColor: '#525252',
                 }, 
                 // to(최종 상태)
                 {
@@ -51,7 +52,7 @@ const Dark_Contact = () => {
                     },
                     onComplete: function () {
                         gsap.to(text, {
-                            WebkitTextStrokeColor: '#5d5d5d', // 테두리 색상을 원래 색상으로 설정
+                            WebkitTextStrokeColor: '#4f4f4f', // 테두리 색상을 원래 색상으로 설정
                             WebkitTextFillColor: 'transparent',
                             clipPath: 'inset(0 0 0 0)', // 텍스트를 다시 왼쪽에서 오른쪽으로 채우기
                             duration: 2,
@@ -64,8 +65,8 @@ const Dark_Contact = () => {
     }, []);
 
     return(
-        <HomeLayout backgroundColor={backgroundColor} headerBackgroundColor="#1a1a1a" color="#fff">
-            <Container style={{backgroundColor:backgroundColor}}>
+        // <HomeLayout backgroundColor={background} headerBackgroundColor="#1a1a1a" color="#fff">
+            <Container>
                 <Title>
                     <div>CONTACT</div>
                     <div>
@@ -82,14 +83,14 @@ const Dark_Contact = () => {
                             <div ref={addTextRefs} className='backText'>INFO</div>
                     </BackText>
                     <HowContect>
-                        <div style={{backgroundColor:'#000', color:'#fff'}}>E-mail</div>
-                        <div style={{backgroundColor:'#000', color:'#fff'}}>GitHub</div>
-                        <div style={{backgroundColor:'#000', color:'#fff'}}>Notion</div>
-                        <div style={{backgroundColor:'#000', color:'#fff'}}>OpenKakao</div>
+                        <div style={{background:'linear-gradient(135deg, #a8e063, #56ab2f)', color:'#fff'}}>E-mail</div>
+                        <div style={{background:'linear-gradient(135deg, #6e6e6e, #3e3e3e)', color:'#fff'}}>GitHub</div>
+                        <div style={{background:'linear-gradient(135deg, #d5d5d5, #9e9e9e)', color:'#fff'}}>Notion</div>
+                        <div style={{background:'linear-gradient(135deg, #ffcc00, #ff9900)', color:'#fff'}}>OpenKakao</div>
                     </HowContect>
                 </Contents>
             </Container>
-        </HomeLayout>
+        // </HomeLayout>
     );
 };
 
@@ -103,6 +104,7 @@ const Container = styled.div`
     padding-bottom: 50px;
     width: 100%;
     max-width: 1200px;
+    min-height: 100vh;
     overflow-x: hidden;
 
     svg{
@@ -116,7 +118,7 @@ const BackText = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 45%;
+    top: 40%;
     transform: translateY(-50%);
     white-space: nowrap;
     z-index: 0;
@@ -167,8 +169,9 @@ const Contents = styled.div`
     & .card3D {
         display: flex;
         justify-content: center;
+        margin-bottom: 100px;
         width: 100%;
-        min-height: 500px;
+        min-height: calc(100vh - 278.33px);
         height: 100%;
         z-index: 300;
     }
@@ -191,7 +194,6 @@ const HowContect = styled.div`
         height: 50px;
 
         border-radius: 8px;
-        border: 1px solid #fff;
 
         cursor: pointer;
     }

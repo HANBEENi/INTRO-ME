@@ -11,6 +11,7 @@
  * 
  * 7. 스크롤을 아래로 내려갔다가 빠르게 올라올 때, 스크린탑이 될 때 바로 컨텐츠의 top값이 조정되어야하는데
  *    잠깐 멈칫 했다가 동작하는게 거슬림
+ * 8. 스크롤 네비게이션
  */
 
 import { media } from '@/styles/mediaQuery';
@@ -18,6 +19,13 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { throttle } from 'lodash';
 import Header from '@/components/layout/Header';
+import { Element } from 'react-scroll';
+import Main from '@/components/section/01-Main';
+import Intro from '@/components/section/02-Intro';
+import Projects from '@/components/section/03-Projects';
+import Skills from '@/components/section/04-Skills';
+import Links from '@/components/section/05-Links';
+import Contact from '@/components/section/06-Contact';
 
 interface HomeLayout {
     children: any,
@@ -26,7 +34,7 @@ interface HomeLayout {
     color: string,
 }
 
-const HomeLayout = ({children, backgroundColor, headerBackgroundColor, color}:HomeLayout) => {
+const HomeLayout = () => {
     
     const [preScrollY, setPreScrollY] = useState<number>(0);
     const [isShowHeader, setIsShowHeader] = useState<boolean>(true);
@@ -53,14 +61,31 @@ const HomeLayout = ({children, backgroundColor, headerBackgroundColor, color}:Ho
     },[preScrollY, isShowHeader]);
 
     return (
-        <Layout style={{backgroundColor:backgroundColor??'#fff'}}>
+        <Layout style={{background:'linear-gradient(132deg, #2e2e2e, #000)'??'#fff'}}>
             <Header 
-                backgroundColor={headerBackgroundColor} 
-                color={color}
                 showHeader={isShowHeader}
             />
-            <Content isScreenTop={isScreenTop} style={{backgroundColor:backgroundColor??'#fff'}}>{children}</Content>
-            <Footer style={{backgroundColor:headerBackgroundColor}}>
+            <Content isScreenTop={isScreenTop}>
+                <Element name="main">
+                    <Main/>
+                </Element>
+                <Element name="intro">
+                    <Intro/>
+                </Element>
+                <Element name="project">
+                    <Projects/>
+                </Element>
+                <Element name="skills">
+                    <Skills/>
+                </Element>
+                <Element name="links">
+                    <Links/>
+                </Element>
+                <Element name="contact">
+                    <Contact/>
+                </Element>
+            </Content>
+            <Footer style={{backgroundColor:'#000'}}>
                 <div>
                     © 2024 KIMHANBEEN PORTFOLIO. All rights reserved.<br/>
                     이 웹사이트는 상업적 목적 없이 개인 포트폴리오를 위해 제작되었습니다.<br/>
@@ -87,7 +112,8 @@ const Layout = styled.div`
 
 const Content = styled.div<{isScreenTop:boolean}>`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding-top: ${({isScreenTop})=>(isScreenTop?'180px':'100px')};
     padding-bottom: 200px;
     min-width: 100vw;

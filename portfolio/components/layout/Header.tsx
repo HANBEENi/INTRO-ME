@@ -2,14 +2,10 @@ import { media } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { LogoSVG, MoonSVG, SunSVG } from '@/public/SVG/HeaderSVG';
+import { Link } from 'react-scroll';
 
-interface Props{
-    backgroundColor: string,
-    color: string,
-    showHeader: boolean
-}
 
-const Header = ({backgroundColor, color, showHeader}:Props) => {
+const Header = ({showHeader}:any) => {
 
     const router = useRouter();
 
@@ -24,11 +20,31 @@ const Header = ({backgroundColor, color, showHeader}:Props) => {
                         <div className='modeName'>dark</div>
                         <div className='icon'><MoonSVG/></div>
                     </DarkMode>
-                    <li>INTRO</li>
-                    <li onClick={()=>router.push(`/project`)}>PROJECT</li>
-                    <li onClick={()=>router.push(`/skill`)}>SKILL</li>
-                    <li>LINK</li>
-                    <li onClick={()=>router.push(`/contact`)}>CONTACT</li>
+                    <li>
+                        <Link activeClass="active" to="intro" spy={true} smooth={true} offset={-70} duration={500}>
+                            INTRO
+                        </Link>
+                    </li>
+                    <li onClick={()=>router.push(`/project`)}>
+                        <Link activeClass="active" to="projects" spy={true} smooth={true} offset={-70} duration={500}>
+                            PROJECT
+                        </Link>
+                    </li>
+                    <li onClick={()=>router.push(`/skill`)}>
+                        <Link activeClass="active" to="skills" spy={true} smooth={true} offset={-70} duration={500}>
+                            SKILL
+                        </Link>
+                    </li>
+                    <li>
+                        <Link activeClass="active" to="links" spy={true} smooth={true} offset={-70} duration={500}>
+                            LINK
+                        </Link>
+                    </li>
+                    <li onClick={()=>router.push(`/contact`)}>
+                        <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-70} duration={500}>
+                            CONTACT
+                        </Link>
+                    </li>
                 </MenuBar>
             </HeaderContent>
         </Layout>

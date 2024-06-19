@@ -1,5 +1,5 @@
 /**
- * 재사용 D3.js 원형 그래프 컴포넌트 입니다.
+ * 스킬 섹션에 사용되는 D3.js 원형 그래프 컴포넌트 입니다.
  * 
  * data 예시
  * [{ category: "CSS", value: 80, color: "#35d0e1" },];
@@ -21,7 +21,7 @@ interface D3ChartProps {
   chartId: string;
 }
 
-const D3Chart2 = ({ data, chartId }:D3ChartProps) => {
+const Skills_D3Chart = ({ data, chartId }:D3ChartProps) => {
   const chartRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -223,4 +223,4 @@ const D3Chart2 = ({ data, chartId }:D3ChartProps) => {
   );
 };
 
-export default D3Chart2;
+export default Skills_D3Chart;

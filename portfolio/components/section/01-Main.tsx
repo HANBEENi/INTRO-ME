@@ -1,9 +1,8 @@
 import styled, { css, keyframes } from 'styled-components';
-import M_Effect01 from '@/components/mouseEffect/M_Effect01';
+import M_Effect01 from '@/components/section_modules/mouse_effect/M_Effect01';
 import { media } from '@/styles/mediaQuery';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import HomeLayout from '@/components/layout/HomeLayout';
 
 const Main = () => {
     //#1CE629;
@@ -77,9 +76,7 @@ const Main = () => {
     },[]);
 
     return(
-        <>
-        <HomeLayout backgroundColor='#c5c5c5' headerBackgroundColor='#fefefe53' color='#000'>
-            {/* 컨텐츠 */}
+        <Layout>
             <Content>
                 <MainText>
                     <TextMask id="firstText">
@@ -112,11 +109,9 @@ const Main = () => {
                         </Text>
                     </TextMask>
                 </MainText>
-                {/* <IntroMent2/> */}
+                <M_Effect01/>
             </Content>
-        </HomeLayout>
-        <M_Effect01/>
-        </>
+        </Layout>
     );
 };
 
