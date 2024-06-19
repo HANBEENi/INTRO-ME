@@ -1,6 +1,7 @@
 import { media } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
+import { LogoSVG, MoonSVG, SunSVG } from '@/public/SVG/HeaderSVG';
 
 interface Props{
     backgroundColor: string,
@@ -13,17 +14,15 @@ const Header = ({backgroundColor, color, showHeader}:Props) => {
     const router = useRouter();
 
     return(
-        <Layout style={{backgroundColor:backgroundColor, color:color}} showHeader={showHeader}>
+        <Layout showHeader={showHeader}>
             <HeaderContent>
                 <Logo onClick={()=>router.push(`/main`)}>
-                    <Text1>HB</Text1>
-                    <Text2><p>FRONTEND</p><p>PORTFOLIO</p></Text2>
-                    <Text3><div><div id="dot" style={{backgroundColor:color}}></div></div></Text3>
+                    <LogoSVG/>
                 </Logo>
                 <MenuBar>
                     <DarkMode>
-                        <div className='modeName'>DARK</div>
-                        <div className='icon'></div>
+                        <div className='modeName'>dark</div>
+                        <div className='icon'><MoonSVG/></div>
                     </DarkMode>
                     <li>INTRO</li>
                     <li onClick={()=>router.push(`/project`)}>PROJECT</li>
@@ -49,7 +48,7 @@ const Layout = styled.div<{showHeader: boolean}>`
     width: 100%;
     height: 100px;
 
-    background-color: #ffffff70;
+    background: linear-gradient(to right, #2e2e2e, #000000);
 
     transition: opacity 0.3s, transform 0.3s;
     opacity: ${({ showHeader }) => (showHeader ? '1' : '0')};
@@ -73,45 +72,9 @@ const Logo = styled.div`
     gap: 2px;
 
     &:hover{
-        color: #ff264a;
     }
 
     cursor: pointer;
-`;
-const Text1 = styled.div`
-    display: flex;
-    align-items: center;
-    padding-top: 3px;
-    box-sizing: border-box;
-
-    font-size: 2.5rem;
-    font-weight: 300;
-`;
-const Text2 = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    font-size: 0.875rem;
-`;
-const Text3 = styled.div`
-    display: flex;
-    align-items: center;
-    
-    & > div{
-        
-        display: flex;
-        align-items: flex-end;
-        height: 28px;
-        
-        & #dot {
-            display: flex;
-            width: 4px;
-            height: 5px;
-
-            border-radius: 100%;
-        }
-    }
 `;
 
 const MenuBar = styled.ul`
@@ -130,7 +93,10 @@ const MenuBar = styled.ul`
 
     & > li {
         list-style-type: none;
-
+        background: linear-gradient(to right, #2ebf91, #8368c3);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
 
         &:hover{
 
@@ -144,11 +110,12 @@ const DarkMode = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 5px 10px;
-    width: 120px;
-    height: 45px;
+    width: 110px;
+    height: 40px;
 
-    background-color: #000;
+    background-color: #292929;
     border-radius: 30px;
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.25);
 
     color: #fff;
     font-size: 0.875rem;
@@ -157,14 +124,17 @@ const DarkMode = styled.div`
         display: flex;
         justify-content: center;
         width: 100%;
+
+        font-size: 0.875rem;
     }
 
     & .icon {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 60px;
-        height: 100%;
+        padding: 3px 2px 2px;
+        height: 90%;
+        aspect-ratio: 1/1;
 
         background-color: #fff;
         border-radius: 30px;
