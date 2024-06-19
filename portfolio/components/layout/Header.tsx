@@ -25,12 +25,12 @@ const Header = ({showHeader}:any) => {
                             INTRO
                         </Link>
                     </li>
-                    <li onClick={()=>router.push(`/project`)}>
+                    <li>
                         <Link activeClass="active" to="projects" spy={true} smooth={true} offset={-70} duration={500}>
                             PROJECT
                         </Link>
                     </li>
-                    <li onClick={()=>router.push(`/skill`)}>
+                    <li>
                         <Link activeClass="active" to="skills" spy={true} smooth={true} offset={-70} duration={500}>
                             SKILL
                         </Link>
@@ -40,7 +40,7 @@ const Header = ({showHeader}:any) => {
                             LINK
                         </Link>
                     </li>
-                    <li onClick={()=>router.push(`/contact`)}>
+                    <li>
                         <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-70} duration={500}>
                             CONTACT
                         </Link>
