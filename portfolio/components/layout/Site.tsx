@@ -36,11 +36,11 @@ interface HomeLayout {
 
 const HomeLayout = () => {
     
+    /** 화면 스크롤(Y축) 감지 */
     const [preScrollY, setPreScrollY] = useState<number>(0);
     const [isShowHeader, setIsShowHeader] = useState<boolean>(true);
     const [isScreenTop, setIsScreenTop] = useState<boolean>(true);
 
-    /** 화면 스크롤(Y축) 감지 */
     useEffect(() => {
         const handleScroll = throttle(() => {
             const currentScrollY = window.scrollY;
@@ -62,29 +62,35 @@ const HomeLayout = () => {
 
     return (
         <Layout style={{background:'linear-gradient(132deg, #2e2e2e, #000)'??'#fff'}}>
-            <Header 
-                showHeader={isShowHeader}
-            />
-            <Content isScreenTop={isScreenTop}>
-                <Element name="main">
-                    <Main/>
-                </Element>
+            <Header showHeader={isShowHeader} />
+            {/* <Content isScreenTop={isScreenTop}> */}
+            <Element name="main">
+                <Main/>
+            </Element>
+            <BackLayout>
+                <video autoPlay muted playsInline>
+                    <source src="/videos/smokeBackground.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
                 <Element name="intro">
-                    <Intro/>
+                    <Intro />
                 </Element>
-                <Element name="project">
-                    <Projects/>
-                </Element>
-                <Element name="skills">
-                    <Skills/>
-                </Element>
-                <Element name="links">
-                    <Links/>
-                </Element>
-                <Element name="contact">
-                    <Contact/>
-                </Element>
-            </Content>
+            </BackLayout>
+            <Element name="project">
+                <Projects/>
+            </Element>
+            <SkillLayout>
+            <Element name="skills">
+                <Skills/>
+            </Element>
+            </SkillLayout>
+            <Element name="links">
+                <Links/>
+            </Element>
+            <Element name="contact">
+                <Contact/>
+            </Element>
+            {/* </Content> */}
             <Footer style={{backgroundColor:'#000'}}>
                 <div>
                     © 2024 KIMHANBEEN PORTFOLIO. All rights reserved.<br/>
@@ -110,19 +116,22 @@ const Layout = styled.div`
     height: 100%;
 `;
 
-const Content = styled.div<{isScreenTop:boolean}>`
+const BackLayout = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding-top: ${({isScreenTop})=>(isScreenTop?'180px':'100px')};
-    padding-bottom: 200px;
-    min-width: 100vw;
+    justify-content: center;
+    position: relative;
     width: 100%;
+    height: 100%;
 
-    transition: padding-top 0.5s ease;
-
-    ${media.tablet}{
-        padding: 0px 20px;
+    video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        object-fit: cover;
     }
 `;
 
@@ -134,4 +143,17 @@ const Footer = styled.div`
     height: 100%;
 
     color: #fff;
+`;
+
+const SkillLayout = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 0;
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+
+    background: url('images/smoke14.png');
+    background-size: cover;
 `;
