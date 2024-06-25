@@ -1,8 +1,8 @@
-import HomeLayout from "@/components/layout/Site";
+import SiteLayout from "@/components/layout/Site";
 
 const MainPage = () => {
     return (
-        <HomeLayout></HomeLayout>
+        <SiteLayout></SiteLayout>
     );
 };
 

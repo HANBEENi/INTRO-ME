@@ -34,7 +34,7 @@ interface HomeLayout {
     color: string,
 }
 
-const HomeLayout = () => {
+const SiteLayout = () => {
     
     /** 화면 스크롤(Y축) 감지 */
     const [preScrollY, setPreScrollY] = useState<number>(0);
@@ -104,7 +104,7 @@ const HomeLayout = () => {
         </Layout>
     );
 };
-export default HomeLayout;
+export default SiteLayout;
 
 const Layout = styled.div`
     display: flex;
