@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import gsap from 'gsap';
 
-const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/Contact_Card3D(D)"), { ssr: false });
+const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/models/Contact_Card3D(D)"), { ssr: false });
 const backgroundColor = '#000000';
 const background = 'linear-gradient(180deg, #000, #1a1a1a)';
 

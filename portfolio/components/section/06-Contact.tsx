@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 import gsap from 'gsap';
 
-const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/Contact_Card3D(D)"), { ssr: false });
+const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/models/Contact_Card3D(D)"), { ssr: false });
 
 const Contact = () => {
 
@@ -34,13 +34,6 @@ const Contact = () => {
                     duration: 2,
                     ease: 'power2.inOut',
                     clipPath: 'inset(0 100% 0 0)',
-                    // 스크롤 트리거 지금은 사용 보류
-                    // scrollTrigger: {
-                    //     trigger: text,
-                    //     start: 'top 20%',
-                    //     end: 'top 80%',
-                    //     scrub: true,
-                    // },
                     onUpdate: function () {
                         const progress = this.progress();
                         const clipPathValue = `inset(0 ${100 - (progress * 100)}% 0 0)`;
