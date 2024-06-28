@@ -3,6 +3,11 @@ import { throttle } from "lodash";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+
+/** [TODO]
+ *  스크린top이 아니라, 각 섹션의 top으로 수정해야함
+ */
+
 const Body = ({children}:any) => {
 
     const [preScrollY, setPreScrollY] = useState<number>(0);
@@ -31,7 +36,7 @@ const Body = ({children}:any) => {
     
     return(
         <Layout>
-            <Content isScreenTop={isScreenTop}>
+            <Content isShowHeader={isShowHeader}>
                 {children}
             </Content>
         </Layout>
@@ -43,26 +48,22 @@ export default Body;
 const Layout = styled.div`
     display: flex;
     flex-direction: column;
-    position: relative;
     align-items: center;
+    position: relative;
     width: 100vw;
-    min-height: 100vh;
-
+    min-height: calc(100vh + 1rem); // 헤더on,off시(스크롤) 화면이 조금 들려서 아래 부분 섹션이 보여서, 1rem 정도 높이 추가
+    
     ${media.tablet}{
         padding: 0px 20px;
         box-sizing: border-box;
     }
 `;
 
-const Content = styled.div<{isScreenTop:boolean}>`
+const Content = styled.div<{isShowHeader:boolean}>`
     display: flex;
-    position: relative;
-    top: 100px;
-    padding-top: ${({isScreenTop})=>(isScreenTop?'180px':'100px')};
+    padding: ${({isShowHeader})=>(isShowHeader? '180px 0' : '100px 0')};
+    transition: padding 1s;
     max-width: 1200px;
     width: 100%;
-    /* height: 250vh; */
-    height: 100%;
-
-    transition: padding-top 0.5s ease;
+    height: 100vh;
 `;
