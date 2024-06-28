@@ -1,18 +1,18 @@
 import { media } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { LogoSVG, MoonSVG, SunSVG } from '@/public/SVG/HeaderSVG';
+import { LogoSVG, MoonSVG, SunSVG } from '@/public/svgs/HeaderSVG';
 import { Link } from 'react-scroll';
 
 
-const Header = ({showHeader}:any) => {
+const Header = ({isShowHeader}:any) => {
 
     const router = useRouter();
 
     return(
-        <Layout showHeader={showHeader}>
+        <Layout isShowHeader={isShowHeader}>
             <HeaderContent>
-                <Logo onClick={()=>router.push(`/main`)}>
+                <Logo onClick={()=>router.push(`/`)}>
                     <LogoSVG/>
                 </Logo>
                 <MenuBar>
@@ -21,27 +21,27 @@ const Header = ({showHeader}:any) => {
                         <div className='icon'><MoonSVG/></div>
                     </DarkMode>
                     <li>
-                        <Link activeClass="active" to="intro" spy={true} smooth={true} offset={-70} duration={500}>
-                            INTRO
+                        <Link  data-to="home" activeClass="active" to="home" spy={true} smooth={true} offset={0} duration={500}>
+                            HOME
                         </Link>
                     </li>
                     <li>
-                        <Link activeClass="active" to="projects" spy={true} smooth={true} offset={-70} duration={500}>
-                            PROJECT
+                        <Link  data-to="about" activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={500}>
+                            ABOUT
                         </Link>
                     </li>
                     <li>
-                        <Link activeClass="active" to="skills" spy={true} smooth={true} offset={-70} duration={500}>
-                            SKILL
+                        <Link data-to="skills" activeClass="active" to="skills" spy={true} smooth={true} offset={0} duration={500}>
+                            SKILLS
                         </Link>
                     </li>
                     <li>
-                        <Link activeClass="active" to="links" spy={true} smooth={true} offset={-70} duration={500}>
-                            LINK
+                        <Link data-to="projects" activeClass="active" to="projects" spy={true} smooth={true} offset={0} duration={500}>
+                            PROJECTS
                         </Link>
                     </li>
                     <li>
-                        <Link activeClass="active" to="contact" spy={true} smooth={true} offset={-70} duration={500}>
+                        <Link data-to="contact" activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={500}>
                             CONTACT
                         </Link>
                     </li>
@@ -53,7 +53,7 @@ const Header = ({showHeader}:any) => {
 
 export default Header;
 
-const Layout = styled.div<{showHeader: boolean}>`
+const Layout = styled.div<{isShowHeader: boolean}>`
     display: flex;
     position: fixed;
     top: 0;
@@ -64,11 +64,11 @@ const Layout = styled.div<{showHeader: boolean}>`
     width: 100%;
     height: 100px;
 
-    background: linear-gradient(to right, #2e2e2e, #000000);
+    background: linear-gradient(to right, #2e2e2ee2, #000000c0);
 
     transition: opacity 0.3s, transform 0.3s;
-    opacity: ${({ showHeader }) => (showHeader ? '1' : '0')};
-    transform: ${({ showHeader }) => (showHeader ? 'translateY(0)' : 'translateY(-100px)')};
+    opacity: ${({ isShowHeader }) => (isShowHeader ? '1' : '0')};
+    transform: ${({ isShowHeader }) => (isShowHeader ? 'translateY(0)' : 'translateY(-100px)')};
 
     ${media.tablet}{
         padding: 0px 20px;
