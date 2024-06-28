@@ -24,6 +24,7 @@ import Header from '@/components/layout/Header';
 import { Element, Events, scroller } from 'react-scroll';
 import Home from '@/components/section/01-Home';
 import About from '@/components/section/02-About';
+import About2 from '@/components/section/02-About2';
 import Skills from '@/components/section/03-Skills';
 import Projects from '@/components/section/04-Projects';
 import Contact from '@/components/section/06-Contact';
@@ -93,9 +94,12 @@ const SiteLayout = () => {
                 <Element name="home" data-section="home">
                     <Home/>
                 </Element>
-                    <Element name="about" data-section="about">
-                        <About />
-                    </Element>
+                <Element name="about" data-section="about">
+                    <About />
+                </Element>
+                <Element name="about2" data-section="about2">
+                    <About2 />
+                </Element>
                 <SkillLayout>
                     <Element name="skills" data-section="skills">
                         <Skills/>
