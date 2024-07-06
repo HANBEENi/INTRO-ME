@@ -9,7 +9,7 @@ import { EmailHoverSVG, EmailSVG, GithubHoverSVG, GithubSVG, NotionHoverSVG, Not
 const CompactFooter = () => {
     return(
         <Layout>
-            <Notice>© 2024 KIMHANBEEN PORTFOLIO. All rights reserved.</Notice>
+            <Notice>© 2024 KIMHANBEEN PORTFOLIO. All rights reserved. | WEB FRONTEND PORTFOLIO</Notice>
             <Links>
                 <LinkItem>
                     <div className="item"><EmailSVG/></div>
