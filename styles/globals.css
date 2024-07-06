@@ -10,7 +10,7 @@
 
 body {
     overflow-x: hidden;
-    
+    /* font-family: 'Inter'; */
 }
 
 @font-face{
@@ -25,3 +25,14 @@ body {
     src: url('/fonts/GmarketSansTTFLight.ttf') format("truetype");
 }
 
+@font-face{
+    font-family: "Inter";
+    font-weight: 200;
+    src: url('/fonts/Inter.ttf') format("truetype");
+}
+
+@font-face{
+    font-family: "InterBlack";
+    font-weight: 200;
+    src: url('/fonts/InterBlack.ttf') format("truetype");
+}
