@@ -15,7 +15,7 @@ frontend:
       - '**/*'
   cache:
     paths:
-      - node_modules/**/*
+      - portfolio/node_modules/**/*
 
 backend:
   phases:
