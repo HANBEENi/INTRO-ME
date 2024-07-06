@@ -8,7 +8,7 @@ const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/
 const Contact = () => {
     
     const [isAction, setIsAction] = useState<boolean>(false);
-    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const sectionRef = useRef<HTMLDivElement>(null);
 
     /** BackText 애니메이션 효과 */
     // 각 Text 컴포넌트에 대한 참조를 저장

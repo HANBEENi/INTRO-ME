@@ -150,7 +150,7 @@ const Home = () => {
                 <Title isShowHeader={isShowHeader}>
                     <div className="title">
                         {text.split('').map((text, index)=>(
-                            <TitleText delay={index * 0.2} style={{backgroundPosition:`${(index*13)}%`}}>
+                            <TitleText key={index} delay={index * 0.2} style={{backgroundPosition:`${(index*13)}%`}}>
                                 {text}
                             </TitleText>
                         ))}

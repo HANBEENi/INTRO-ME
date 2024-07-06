@@ -31,7 +31,7 @@ const chartData_Comunity = [
 
 const Skills = () => {
     const [isAction, setIsAction] = useState<boolean>(false);
-    const sectionRef = useRef<HTMLDivElement | null>(null);
+    const sectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
