@@ -19,7 +19,7 @@
 import { media } from '@/styles/mediaQuery';
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
-import { debounce, throttle } from 'lodash';
+import { throttle } from 'lodash';
 import Header from '@/components/layout/Header';
 import { Element, scroller } from 'react-scroll';
 import Home from '@/components/section/01-Home';
@@ -34,17 +34,7 @@ const SiteLayout = () => {
     const [preScrollY, setPreScrollY] = useState<number>(0);
     const [isShowHeader, setIsShowHeader] = useState<boolean>(true);
     const [isScreenTop, setIsScreenTop] = useState<boolean>(true);
-    const [activeSection, setActiveSection] = useState<string>('home'); // 현재 활성화된 섹션 name
-    const [isScrollLocked, setIsScrollLocked] = useState<boolean>(false); // 스크롤 잠금 상태
-    const sectionRefs = {
-            home: useRef<HTMLDivElement>(null),
-            about: useRef<HTMLDivElement>(null),
-            skills: useRef<HTMLDivElement>(null),
-            projects: useRef<HTMLDivElement>(null),
-            contact: useRef<HTMLDivElement>(null),
-        };
     
-
     /** 화면 스크롤(Y축) 감지 */
     useEffect(() => {
         const handleScroll = throttle(() => {
@@ -56,7 +46,7 @@ const SiteLayout = () => {
             }
             setIsScreenTop(currentScrollY === 0);
             setPreScrollY(currentScrollY);
-        }, 100); // 200ms 간격으로 스크롤 이벤트 처리
+        }, 500); // 200ms 간격으로 스크롤 이벤트 처리
 
         window.addEventListener('scroll',handleScroll);
 
@@ -64,26 +54,6 @@ const SiteLayout = () => {
             window.removeEventListener('scroll',handleScroll);
         }
     },[preScrollY, isShowHeader]);
-
-    /** Header 메뉴 클릭 시 섹션 이동 처리 */
-    const scrollToSection = (section: string) => {
-        scroller.scrollTo(section, {
-            duration: 500,
-            smooth: 'easeOutQuad',
-            spy: true,
-            activeClass: 'active',
-        });
-    };
-    // 스크롤 잠금 함수
-    const lockScroll = () => {
-        setIsScrollLocked(true);
-        document.body.style.overflow = 'hidden';
-    };
-    // 스크롤 잠금 해제 함수
-    const unlockScroll = () => {
-        setIsScrollLocked(false);
-        document.body.style.overflow = 'auto';
-    };
 
     /** 스크롤 감지 섹션 이동 */
     useEffect(() => {
@@ -96,7 +66,12 @@ const SiteLayout = () => {
                     if (sectionName) {
                         scroller.scrollTo(sectionName, {
                             duration: 1000,
-                            smooth: 'easeInOutQuart'
+                            smooth: 'easeOutQuad',
+                            spy: true,
+                            activeClass: 'active',
+                            ignoreCancelEvents: true,
+                            onComplete: () => {
+                            }
                         });
                     }
                 }
@@ -104,7 +79,7 @@ const SiteLayout = () => {
         }, {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1 // 섹션의 30%가 보이면 감지
+            threshold: 0.1
         });
 
         sections.forEach(section => observer.observe(section));
@@ -115,33 +90,23 @@ const SiteLayout = () => {
     }, []);
 
     return (
-        // <Layout isShowHeader={isShowHeader} style={{background:'linear-gradient(132deg, #2e2e2e, #000)'??'#fff'}}>
-        <Layout isShowHeader={isShowHeader} style={{background:'linear-gradient(132deg, #000, #2e2e2e)'??'#fff'}}>
-            <Header isShowHeader={isShowHeader} activeSection={activeSection}/>
+        <Layout isShowHeader={isShowHeader}style={{background:'linear-gradient(132deg, #2e2e2e, #000)'??'#fff'}}>
+            <Header isShowHeader={isShowHeader}/>
                 <Element name="home" data-section="home">
-                    <div ref={sectionRefs.home}><Home/></div>
-                    
+                    <Home/>
                 </Element>
                 <Element name="about" data-section="about">
-                    <div ref={sectionRefs.about}><About/></div>
-                    
+                    <About/>
                 </Element>
-                {/* <BackLayout> */}
-                    <Element name="skills" data-section="skills">
-                        <div ref={sectionRefs.skills}><Skills/></div>
-                        
-                    </Element>
-                {/* </BackLayout> */}
-                {/* <BackLayout> */}
-                    <Element name="projects" data-section="projects">
-                        <div ref={sectionRefs.projects}><Projects/></div>
-                        
-                    </Element>
-                    <Element name="contact" data-section="contact">
-                        <div ref={sectionRefs.contact}><Contact/></div>
-                        
-                    </Element>
-                {/* </BackLayout> */}
+                <Element name="skills" data-section="skills">
+                    <Skills/>
+                </Element>
+                <Element name="projects" data-section="projects">
+                    <Projects/>
+                </Element>
+                <Element name="contact" data-section="contact">
+                    <Contact/>
+                </Element>
             <QuickToggle>
                 <Toggle className="QuickAccessToggle" isScreenTop={isScreenTop}>
                     <QuickAccessToggle/>
@@ -218,13 +183,4 @@ const Toggle = styled.div<{isScreenTop:boolean}>`
     right: 2.5%;
     transition: bottom 1.5s;
     z-index: 1;
-`;
-
-const BackLayout = styled.div`
-    /* background:linear-gradient(132deg, #2e2e2e, #000); */
-    background: url('/images/smoke.png');
-    /* background-repeat: no-repeat; */
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
 `;

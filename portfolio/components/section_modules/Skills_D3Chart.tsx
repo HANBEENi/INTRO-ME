@@ -19,12 +19,15 @@ interface DataItem {
 interface D3ChartProps {
   data: DataItem[];
   chartId: string;
+  isAnimate: boolean;
 }
 
-const Skills_D3Chart = ({ data, chartId }:D3ChartProps) => {
+const Skills_D3Chart = ({ data, chartId, isAnimate }:D3ChartProps) => {
   const chartRef = useRef<HTMLDivElement | null>(null);
+  // console.log('isAnimate',isAnimate);
 
   useEffect(() => {
+    // if (!chartRef.current || !isAnimate) return; //animate가 true일 때만 애니메이션 실행
     if (!chartRef.current) return;
     
     // 기존의 SVG 요소를 제거
@@ -216,7 +219,7 @@ const Skills_D3Chart = ({ data, chartId }:D3ChartProps) => {
     };
     categoryLabels(data, svg as unknown as d3.Selection<SVGGElement, unknown, HTMLElement, undefined>, innerRadius);
 
-  }, []);
+  }, [isAnimate]);
 
   return (
     <div id={chartId} ref={chartRef} style={{ width: "100%", height: "auto", minWidth: "30px", maxWidth: "700px" }}></div>

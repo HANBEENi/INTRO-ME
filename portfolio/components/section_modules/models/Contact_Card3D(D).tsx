@@ -1,9 +1,10 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Canvas, extend, useFrame, useLoader, useThree} from '@react-three/fiber';
-import { MeshReflectorMaterial, OrbitControls, RoundedBox, Text } from '@react-three/drei';
+import { MeshReflectorMaterial, OrbitControls, PerspectiveCamera, RoundedBox, Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 extend({GridHelper: THREE.GridHelper});
+
 
 const Icon = ({ position, color, textureUrl, isHovered, onPointerOver, onPointerOut, onClick, label }:any) => {
     const { gl } = useThree();
@@ -51,7 +52,6 @@ const HowContact = () => {
 
   const handlePointerOver = (index: number, label: string) => {
     setHoveredIndex(index);
-    console.log(label);
   };
   const handlePointerOut = () => {
     setHoveredIndex(null);
@@ -121,7 +121,7 @@ const HowContact = () => {
   );
 }
 
-const Card = () => {
+const Card = ({isAction}:any) => {
   const cardRef = useRef<THREE.Group>(null);
 
   const [rotationActive, setRotationActive] = useState<boolean>(true);
@@ -134,7 +134,18 @@ const Card = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (isAction) {
+            setRotationActive(true);
+            setTime(0);
+            if (cardRef.current) {
+                cardRef.current.rotation.set(-Math.PI / 2, 0, 0); // 원하는 초기 회전값 설정
+            }
+        }
+    }, [isAction]);
+
   useFrame((state, delta) => {
+    if(!rotationActive) return;
     setTime((prev) => prev + delta);
 
     // 회전 진행
@@ -157,6 +168,7 @@ const Card = () => {
         }
         if (time >= 2){
           setRotationActive(false);
+          cardRef.current.rotation.set(0, 0, 0);
         }
       }
     },1000);
@@ -164,7 +176,7 @@ const Card = () => {
     if(!rotationActive && cardRef.current){
       cardRef.current.rotation.set(0, 0, 0);
     }
-  });
+  },);
 
   return (
     <group ref={cardRef} position={[0, 0, 0]}>
@@ -197,35 +209,49 @@ const Card = () => {
         Frontend Developer
       </Text>
       <HowContact />
-      <mesh position={[0, -4.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+      {/* <mesh position={[0, -4.2, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[14, 0.5]}/>
         <meshBasicMaterial
           color="#fff"
-          opacity={0.15}
+          opacity={0.1}
           transparent={true}
         />
-      </mesh>
+      </mesh> */}
     </group>
   );
 };
 
-const Dark_Card3D = () => {
-
+const Dark_Card3D = ({isAction}:any) => {
+  
   const controlRef = useRef<any>(null);
  
   const handleEndDrag = useCallback(async() => {
     if (controlRef.current) {
-
       controlRef.current.reset(); // 카메라 상태를 초기화
     }
   }, []);
 
+  // 화면 크기에 따른 카메라 거리 설정
+  const CameraController = () => {
+    const { camera, size } = useThree();
+
+    useEffect(() => {
+      const aspect = size.width / size.height;
+      const distance = aspect > 1 ? 11.5 : 11.5 * (1 / aspect);
+      camera.position.set(0, 0, distance);
+    }, [size, camera]);
+
+    return null;
+  };
+
   return (
-    <Canvas camera={{ fov: 50, position: [0, 0, 11.5]}} color={'#fff'}>
+    // <Canvas camera={{ fov: 50, position: getCameraPosition() }} color={'#fff'}>
+    <Canvas>
+      <CameraController />
       <ambientLight intensity={8} />
       <directionalLight intensity={15.0} position={[-5, 3, 4.5]} />
       <directionalLight intensity={15.0} position={[-5, -3, 4.5]} />
-      <Card/>
+      <Card isAction={isAction}/>
       <OrbitControls
         ref={controlRef}
         enableZoom={false}

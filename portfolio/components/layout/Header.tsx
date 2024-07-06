@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { LogoSVG, MoonSVG, SunSVG } from '@/public/svgs/HeaderSVG';
 import { Link } from 'react-scroll';
+import { useEffect } from 'react';
 
 
-const Header = ({isShowHeader}:any) => {
+const Header = ({isShowHeader, activeSection, scrollToSection}:any) => {
 
     const router = useRouter();
 
@@ -21,27 +22,27 @@ const Header = ({isShowHeader}:any) => {
                         <div className='icon'><MoonSVG/></div>
                     </DarkMode>
                     <li>
-                        <Link  data-to="home" activeClass="active" to="home" spy={true} smooth={true} offset={0} duration={500}>
+                        <Link activeClass="active" to="home" spy={true} smooth={true} offset={0} duration={500}>
                             HOME
                         </Link>
                     </li>
                     <li>
-                        <Link  data-to="about" activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={500}>
+                        <Link activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={500}>
                             ABOUT
                         </Link>
                     </li>
                     <li>
-                        <Link data-to="skills" activeClass="active" to="skills" spy={true} smooth={true} offset={0} duration={500}>
+                        <Link activeClass="active" to="skills" spy={true} smooth={true} offset={0} duration={500}>
                             SKILLS
                         </Link>
                     </li>
                     <li>
-                        <Link data-to="projects" activeClass="active" to="projects" spy={true} smooth={true} offset={0} duration={500}>
+                        <Link activeClass="active" to="projects" spy={true} smooth={true} offset={0} duration={500}>
                             PROJECTS
                         </Link>
                     </li>
                     <li>
-                        <Link data-to="contact" activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={500}>
+                        <Link activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={500}>
                             CONTACT
                         </Link>
                     </li>
@@ -64,7 +65,8 @@ const Layout = styled.div<{isShowHeader: boolean}>`
     width: 100%;
     height: 100px;
 
-    background: linear-gradient(to right, #2e2e2ee2, #000000c0);
+    /* background: linear-gradient(to right, #2e2e2ee2, #000000c0); */
+    /* background: linear-gradient(to right, #2e2e2e4f, #00000082); */
 
     transition: opacity 0.3s, transform 0.3s;
     opacity: ${({ isShowHeader }) => (isShowHeader ? '1' : '0')};

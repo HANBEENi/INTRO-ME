@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from 'gsap';
 
 const Dark_Card3D_SizeFeat = dynamic(() => import("@/components/section_modules/models/Contact_Card3D(D)"), { ssr: false });
 
 const Contact = () => {
+    
+    const [isAction, setIsAction] = useState<boolean>(false);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
 
     /** BackText 애니메이션 효과 */
     // 각 Text 컴포넌트에 대한 참조를 저장
@@ -52,32 +55,73 @@ const Contact = () => {
                 }
             );
         });
+    }, [isAction]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                setIsAction(true);
+            }else{
+                setIsAction(false);
+            }
+            });
+        },
+        {
+            threshold: 0.3, // 섹션의 30%가 보일 때 트리거
+        }
+        );
+
+        if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+        }
+
+        return () => {
+        if (sectionRef.current) {
+            observer.unobserve(sectionRef.current);
+        }
+        };
     }, []);
 
     return(
-            <Container>
-                <Title>
+            <Container ref={sectionRef}>
+                {/* <Title>
                     <div>CONTACT</div>
                     <div>
                         문의사항이나 제안이 있으시다면 언제든지 연락해주세요!
                         함께 일할 기회를 기대하고 있습니다.
                     </div>
+                </Title> */}
+                <Title>
+                    <Wrap>
+                        <div className="about">CONTACT</div>
+                        <div className="line"></div>
+                        <div className="subTitleEn">
+                            <div className="dot" style={{backgroundColor: '#2EBF91'}}/>
+                            <div>CONTACT</div>
+                        </div>
+                    </Wrap>
+                    <Wrap>
+                        <div className="dotWrap"></div>
+                        {/* <div className="subTitleKo" style={{color: '#2EBF91'}}>프로젝트 보기</div> */}
+                    </Wrap>
                 </Title>
                 <Contents>
                     <div className="card3D">
-                        <Dark_Card3D_SizeFeat/>
+                        <Dark_Card3D_SizeFeat isAction={isAction}/>
                     </div>
                     <BackText>
-                            <div ref={addTextRefs} className='backText'>CONTACT</div>
-                            <div ref={addTextRefs} className='backText'>INFO</div>
+                        <div ref={addTextRefs} className='backText'>CONTACT</div>
+                        <div ref={addTextRefs} className='backText'>INFO</div>
                     </BackText>
-                    <HowContect>
-                        <div style={{background:'linear-gradient(135deg, #a8e063, #56ab2f)', color:'#fff'}}>E-mail</div>
-                        <div style={{background:'linear-gradient(135deg, #6e6e6e, #3e3e3e)', color:'#fff'}}>GitHub</div>
-                        <div style={{background:'linear-gradient(135deg, #d5d5d5, #9e9e9e)', color:'#fff'}}>Notion</div>
-                        <div style={{background:'linear-gradient(135deg, #ffcc00, #ff9900)', color:'#fff'}}>OpenKakao</div>
-                    </HowContect>
                 </Contents>
+                <HowContect>
+                    <div style={{background:'linear-gradient(135deg, #a8e063, #56ab2f)', color:'#fff'}}>E-mail</div>
+                    <div style={{background:'linear-gradient(135deg, #6e6e6e, #3e3e3e)', color:'#fff'}}>GitHub</div>
+                    <div style={{background:'linear-gradient(135deg, #d5d5d5, #9e9e9e)', color:'#fff'}}>Notion</div>
+                    <div style={{background:'linear-gradient(135deg, #ffcc00, #ff9900)', color:'#fff'}}>OpenKakao</div>
+                </HowContect>
             </Container>
     );
 };
@@ -89,11 +133,13 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 50px;
-    width: 100%;
-    max-width: 1200px;
-    min-height: 100vh;
+    width: 100vw;
+    /* max-width: 1200px; */
+    /* height: calc(100vh + 100px); */
+    height: 100vh;
     overflow-x: hidden;
+
+    border: 1px solid #fff;
 
     svg{
         display: flex;
@@ -106,15 +152,17 @@ const BackText = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
+    top: 55%;
+    transform: translateY(-52%);
+    width: 100%;
+    height: 100%;
     white-space: nowrap;
-    z-index: 0;
 
     -webkit-text-stroke: 1px #5d5d5d;
     -webkit-text-fill-color: 'transparent';
     font-size: 290px;
     line-height: 250px;
+    color: #fff;
 
     pointer-events: none;
     user-select: none;
@@ -123,20 +171,67 @@ const BackText = styled.div`
 const Title = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    padding-bottom: 0px;
+    gap: 10px;
+    max-width: 1200px;
     width: 100%;
 
-    color: #fff;
-    font-size: 2.5rem;
+    font-size: 2.1875rem;
+    font-weight: 700;
+`;
 
-    & :nth-child(2){
-        font-size: 1.25rem;
-        text-align: center;
-        line-height: 1.875rem;
+const Wrap = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        color: #919191;
+    font-family: 'InterBold';
+
+    & .about{
+        background: url('/images/smoke_4.png');
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: cover;
+
+        font-size: 3rem;
+        font-weight: 900;
+    }
+    & .line{
+        width: 60%;
+        position: relative;
+    }
+    & .line::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(to right, #acacac5e 50%, rgba(255, 255, 255, 0) 0%);
+        background-size: 10px 10px;
+    }
+    & .subTitleEn{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #fff;
+        font-size: 2.25rem;
+    }
+    & .subTitleKo{
+        font-size: 1.4375rem;
+        font-family: 'Inter';
+        font-weight: 400;
+    }
+    & .dotWrap{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    & .dot{
+        width: 15px;
+        aspect-ratio: 1/1;
+        border-radius: 100%;
     }
 `;
 
@@ -145,8 +240,8 @@ const Contents = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 100px;
     position: relative;
+    max-width: 1200px;
     width: 100%;
     aspect-ratio: 650/363;
 
@@ -157,11 +252,12 @@ const Contents = styled.div`
     & .card3D {
         display: flex;
         justify-content: center;
-        margin-bottom: 100px;
+        align-items: center;
         width: 100%;
         min-height: calc(100vh - 278.33px);
         height: 100%;
         z-index: 300;
+
     }
 `;
 

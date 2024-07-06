@@ -1,11 +1,14 @@
 import styled, { keyframes } from 'styled-components';
-import M_Effect02 from '@/components/section_modules/mouse_effects/M_Effect02';
 import { media } from '@/styles/mediaQuery';
 import { useEffect, useRef, useState } from 'react';
 import { throttle } from 'lodash';
 import CompactFooter from '@/components/section_modules/CompactFooter';
 import { ScrollDownHintSVG } from '@/public/svgs/PageDirectionSVG';
 import React from 'react';
+import dynamic from 'next/dynamic';
+import gsap from 'gsap';
+
+const M_Effect02 = dynamic(()=> import('@/components/section_modules/mouse_effects/M_Effect02'));
 
 /**
  * [ TODO ]
@@ -14,6 +17,8 @@ import React from 'react';
  */
 
 const Home = () => {
+    const [isAction, setIsAction] = useState<boolean>(false);
+    const sectionRef = useRef<HTMLDivElement | null>(null);
 
     /** 배너 이미지 */
     const images = [
@@ -22,6 +27,7 @@ const Home = () => {
         '/images/banner/banner03.jpg',
         '/images/banner/banner04.jpg'
     ];
+    const text = 'PORTFOLIO';
 
     const [currentBanner, setCurrentBanner] = useState<number>(0);
     const [isTransitioning, setIsTransitioning] = useState<boolean>(true);
@@ -63,19 +69,99 @@ const Home = () => {
         }
     },[preScrollY, isShowHeader]);
 
+    /** BackText 애니메이션 효과 */
+    // 각 Text 컴포넌트에 대한 참조를 저장
+    const textRefs = useRef<(HTMLElement | null)[]>([]);
+    textRefs.current = [];
+
+    // Text 컴포넌트에 Ref를 추가
+    const addTextRefs = (el:HTMLElement|null) => {
+        if (el && !textRefs.current.includes(el)){
+            textRefs.current.push(el);
+        }
+    }
+
+    useEffect(() => {
+        textRefs.current.forEach((text, index) => {
+            gsap.fromTo(text, 
+                // from(초기 상태)
+                {
+                    // WebkitTextFillColor: 'transparent',
+                    WebkitTextStrokeColor: '#fff',
+                    // WebkitTextStroke: '1px #fff',
+                }, 
+                // to(최종 상태)
+                {
+                    WebkitTextFillColor: '#fff',
+                    delay: index * 0.7,
+                    duration: 3,
+                    ease: 'power2.inOut',
+                    clipPath: 'inset(0 100% 0 0)',
+                    onUpdate: function () {
+                        const progress = this.progress();
+                        const clipPathValue = `inset(0 ${100 - (progress * 100)}% 0 0)`;
+                        (text!.style as any).clipPath = clipPathValue;
+                        (text!.style as any).WebkitClipPath = clipPathValue;
+                    },
+                    onComplete: function () {
+                        gsap.to(text, {
+                            WebkitTextStrokeColor: '#fff', // 테두리 색상을 원래 색상으로 설정
+                            WebkitTextFillColor: '#fff',
+                            clipPath: 'inset(0 0 0 0)', // 텍스트를 다시 왼쪽에서 오른쪽으로 채우기
+                            duration: 2,
+                            ease: 'power2.inOut',
+                        });
+                    }
+                }
+            );
+        });
+    }, [isAction]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                setIsAction(true);
+            }else{
+                setIsAction(false);
+            }
+            });
+        },
+        {
+            threshold: 0.3, // 섹션의 30%가 보일 때 트리거
+        }
+        );
+
+        if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+        }
+
+        return () => {
+        if (sectionRef.current) {
+            observer.unobserve(sectionRef.current);
+        }
+        };
+    }, []);
+
     return(
-        <>
-        <Layout>
+        <Layout ref={sectionRef}>
             <Content>
                 <Title isShowHeader={isShowHeader}>
-                    <div>
-                        <div className='title'>PORTFOLIO</div>
+                    <div className="title">
+                        {text.split('').map((text, index)=>(
+                            <TitleText delay={index * 0.2} style={{backgroundPosition:`${(index*13)}%`}}>
+                                {text}
+                            </TitleText>
+                        ))}
                     </div>
                     <CompactFooter/>
                 </Title>
                 <GreetingText isShowHeader={isShowHeader}>
-                    <div>안녕하세요, 웹 프론트엔드 개발자 김한빈입니다.</div>
-                    <div>끊임없이 배우고, 성장하겠습니다.</div>
+                    <div ref={addTextRefs}>안녕하세요,&nbsp;웹 프론트엔드&nbsp;개발자&nbsp;김한빈입니다.</div>
+                    <div className="base">안녕하세요,&nbsp;웹 프론트엔드&nbsp;개발자&nbsp;김한빈입니다.</div>
+                    {/* <div ref={addTextRefs}>웹 프론트엔드&nbsp;개발자&nbsp;김한빈입니다.</div> */}
+                    {/* <div>끊임없이&nbsp;배우고,&nbsp;성장하겠습니다.</div> */}
                 </GreetingText>
                 <ScrollHint>
                     <div className='directionIcon'><ScrollDownHintSVG/></div>
@@ -94,15 +180,16 @@ const Home = () => {
                     ))}
                 </BannerButton>
             </Content>
+            {/* <M_Effect02/> */}
         </Layout>
-        {/* <M_Effect02/> */}
-        </>
     );
 };
 
 export default Home;
 
-const moveAndFadeIn = keyframes`
+/** --- 키프레임 --- */
+// 스크롤 힌트 아이콘
+const moveHintIcon = keyframes`
     0% {
         transform: translateY(-130%);
         opacity: 0;
@@ -115,6 +202,7 @@ const moveAndFadeIn = keyframes`
         opacity: 0.5;
     }
 `;
+// 스크롤 힌트 텍스트
 const moveHintText = keyframes`
     0%{
         transform: translateY(-340%);
@@ -125,7 +213,34 @@ const moveHintText = keyframes`
         opacity: 1;
     }
 `;
+// 타이핑 효과
+const typing = keyframes`
+    0%{
+        width: 0;
+    }
+    100%{
+        width: 110%;
+    }
+`;
+const title = keyframes`
+    0%, 100%{
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(-5deg);
+    }
+`;
+const greetingText = keyframes`
+    0%{
+        -webkit-text-fill-color: transparent;
+    }
+    100%{
+        -webkit-text-fill-color: #fff;
+        clip-path: inset(0 100% 0 0);
+    }
+`;
 
+/** --- 스타일 --- */
 const Layout = styled.div`
     display: flex;
     flex-direction: column;
@@ -197,17 +312,6 @@ const Title = styled.div<{isShowHeader:boolean}>`
         justify-content: center;
         align-items: center;
         width: 100%;
-    
-        background: url('/images/smoke14.png');
-        background-repeat: no-repeat;
-        background-size: cover;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-    
-        font-size: 13.125rem;
-        font-family: 'InterBlack';
-        line-height: 1;
     }
 
     & .infoBar{
@@ -219,23 +323,52 @@ const Title = styled.div<{isShowHeader:boolean}>`
         color: #fff;
     }
 `;
+const TitleText = styled.div<{delay: number}>`
+    font-size: 13.125rem;
+    font-family: 'InterBlack';
+    line-height: 1;
+
+    animation: ${title} 2s ease-in-out infinite;
+    animation-delay: ${({ delay }) => delay}s;
+
+    background: url('/images/smoke14.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 20%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+`;
 
 const GreetingText = styled.div<{isShowHeader:boolean}>`
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
     position: absolute;
     top: ${({isShowHeader})=>(isShowHeader?'40%':'34%')};
     left: 50%;
     transition: top 1.5s;
     transform: translate(-50%, -50%);
     user-select: none;
-
-    color: #fff;
-    font-size: 40px;
-
+    white-space: nowrap;
     z-index: 1;
 
-    & :nth-child(2){
-        display: none;
+    font-family: 'InterBlack';
+    font-weight: 700;
+    font-size: 40px;
+    -webkit-text-stroke: 1px #fff;
+    -webkit-text-fill-color: transparent;
+    color: #fff;
+    
+    & :nth-child(1){
+        display: flex;
+        /* animation: ${greetingText} 1s ease-in-out; */
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    & .base{
+        position: absolute;
     }
 `;
 
@@ -254,7 +387,7 @@ const ScrollHint = styled.div`
     & > .directionIcon {
         position: absolute;
         opacity: 0;
-        /* animation: ${moveAndFadeIn} 1.5s infinite; */
+        /* animation: ${moveHintIcon} 1.5s infinite; */
         animation-delay: 3s;
         animation-fill-mode: forwards;
     }

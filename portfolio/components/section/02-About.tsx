@@ -34,10 +34,10 @@ const About= () => {
     
     return (
         <BackLayout>
-            <video ref={videoRef} autoPlay muted playsInline>
+            {/* <video ref={videoRef} autoPlay muted playsInline>
                 <source src="/videos/smokeBackground.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
-            </video>
+            </video> */}
             <Body>
                 <Layout>
                     <Title>
@@ -60,7 +60,7 @@ const About= () => {
                     </Title>
                     <Content>
                         <EduInfo>
-                            <div className="emphasis">안녕하세요, 신입 웹 개발자로 취업을 준비하고 있는 [이름]입니다.</div>
+                            <div className="emphasis">안녕하세요, 신입 웹 개발자로 취업을 준비하고 있는 김한빈 입니다.</div>
                             <div>
                                 저는 작은 코드 한 줄 한 줄이 모여 큰 변화를 만든다는 믿음으로 개발에 임하고 있습니다.<br/>
                                 각 코드 라인이 시스템의 안정성과 성능에 미치는 영향을 깊이 이해하고 있으며, 효율적이고 깔끔한 코드를 작성하는 것이 중요하다고 생각합니다.<br/>
@@ -96,6 +96,10 @@ const BackLayout = styled.div`
         pointer-events: none;
         object-fit: cover;
     }
+
+    /* background: url('/images/smoke.png');
+    background-repeat: no-repeat;
+    background-size: cover; */
 `;
 
 const Layout = styled.div`

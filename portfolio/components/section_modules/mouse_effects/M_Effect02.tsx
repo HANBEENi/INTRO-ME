@@ -108,7 +108,7 @@ export default M_Effect02;
 
 const Layout = styled.div`
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   height: 100%;
   position: fixed;
   top: 0;
