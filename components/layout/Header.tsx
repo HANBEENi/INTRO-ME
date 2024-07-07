@@ -3,12 +3,17 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { LogoSVG, MoonSVG, SunSVG } from '@/public/svgs/HeaderSVG';
 import { Link } from 'react-scroll';
-import { useEffect } from 'react';
 
 
-const Header = ({isShowHeader, activeSection, scrollToSection}:any) => {
+const Header = ({isShowHeader}:any) => {
 
     const router = useRouter();
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if(element){
+            element.scrollIntoView({behavior: 'smooth'});
+        }
+    };
 
     return(
         <Layout isShowHeader={isShowHeader}>
@@ -21,31 +26,11 @@ const Header = ({isShowHeader, activeSection, scrollToSection}:any) => {
                         <div className='modeName'>dark</div>
                         <div className='icon'><MoonSVG/></div>
                     </DarkMode>
-                    <li>
-                        <Link activeClass="active" to="home" spy={true} smooth={true} offset={0} duration={500}>
-                            HOME
-                        </Link>
-                    </li>
-                    <li>
-                        <Link activeClass="active" to="about" spy={true} smooth={true} offset={0} duration={500}>
-                            ABOUT
-                        </Link>
-                    </li>
-                    <li>
-                        <Link activeClass="active" to="skills" spy={true} smooth={true} offset={0} duration={500}>
-                            SKILLS
-                        </Link>
-                    </li>
-                    <li>
-                        <Link activeClass="active" to="projects" spy={true} smooth={true} offset={0} duration={500}>
-                            PROJECTS
-                        </Link>
-                    </li>
-                    <li>
-                        <Link activeClass="active" to="contact" spy={true} smooth={true} offset={0} duration={500}>
-                            CONTACT
-                        </Link>
-                    </li>
+                    <li onClick={()=>scrollToSection('home')}>HOME</li>
+                    <li onClick={()=>scrollToSection('about')}>ABOUT</li>
+                    <li onClick={()=>scrollToSection('skills')}>SKILLS</li>
+                    <li onClick={()=>scrollToSection('projects')}>PROJECTS</li>
+                    <li onClick={()=>scrollToSection('contact')}>CONTACT</li>
                 </MenuBar>
             </HeaderContent>
         </Layout>
