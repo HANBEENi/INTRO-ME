@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { CSSSVG, EmotionLightSVG, HTMLSVG, JSSVG, NextJSDarkSVG, ReactLightSVG, SassSVG, StyleComponentsSVG, TypeScriptSVG } from "@/public/svgs/SkillsIcon/FrontendSVG";
 import { useEffect, useRef, useState } from 'react';
 import Body from '@/components/layout/Body';
+import { media } from '@/styles/mediaQuery';
 
 const D3Chart = dynamic(()=>import('@/components/section_modules/Skills_D3Chart'),{ssr:false});
 
@@ -170,7 +171,6 @@ const Container = styled.div`
     gap: 50px;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
 
     svg{
         display: flex;
@@ -222,6 +222,10 @@ const Wrap = styled.div`
 
         font-size: 3rem;
         font-weight: 900;
+
+        ${media.mobile, media.tablet}{
+            font-size: 2.375rem;
+        }
     }
     & .line{
         width: 60%;
@@ -243,11 +247,17 @@ const Wrap = styled.div`
         gap: 15px;
         color: #fff;
         font-size: 2.25rem;
+        ${media.mobile, media.tablet}{
+            font-size: 26px;
+        }
     }
     & .subTitleKo{
         font-size: 1.4375rem;
         font-family: 'Inter';
         font-weight: 400;
+        ${media.mobile, media.tablet}{
+            font-size: 1.125rem;
+        }
     }
     & .dotWrap{
         display: flex;
@@ -258,6 +268,9 @@ const Wrap = styled.div`
         width: 15px;
         aspect-ratio: 1/1;
         border-radius: 100%;
+        ${media.mobile, media.tablet}{
+            width: 10px;
+        }
     }
 `;
 
@@ -266,9 +279,12 @@ const Content = styled.div`
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: min-content;
     grid-auto-flow: row;
+    justify-items: center;
+    padding: 0 20px;
     width: 100%;
+    height: 100%;
     gap: 25px;
-
+    
     color: #fff;
     font-size: 1.5625rem;
 `;
@@ -279,6 +295,7 @@ const PartSet = styled.div`
     grid-auto-rows: min-content;
     grid-auto-flow: row;
     gap: 20px;
+    min-width: 320px;
 
     &:hover > .one {
         box-shadow: 0 5px 20px rgba(75, 75, 75, 0.3);

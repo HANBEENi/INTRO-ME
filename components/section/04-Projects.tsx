@@ -2,6 +2,7 @@ import Body from "@/components/layout/Body"
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import ProjectCard from "@/components/section_modules/ProjectCard";
+import { media } from "@/styles/mediaQuery";
 
 const Projects = () => {
     const sectionRef = useRef<HTMLDivElement | null>(null);
@@ -74,6 +75,10 @@ const Wrap = styled.div`
 
         font-size: 3rem;
         font-weight: 900;
+
+        ${media.mobile, media.tablet}{
+            font-size: 2.375rem;
+        }
     }
     & .line{
         width: 60%;
@@ -95,11 +100,17 @@ const Wrap = styled.div`
         gap: 15px;
         color: #fff;
         font-size: 2.25rem;
+        ${media.mobile, media.tablet}{
+            font-size: 26px;
+        }
     }
     & .subTitleKo{
         font-size: 1.4375rem;
         font-family: 'Inter';
         font-weight: 400;
+        ${media.mobile, media.tablet}{
+            font-size: 1.125rem;
+        }
     }
     & .dotWrap{
         display: flex;
@@ -110,6 +121,9 @@ const Wrap = styled.div`
         width: 15px;
         aspect-ratio: 1/1;
         border-radius: 100%;
+        ${media.mobile, media.tablet}{
+            width: 10px;
+        }
     }
 `;
 
@@ -120,6 +134,8 @@ const Content = styled.div`
     padding: 30px 0;
     gap: 70px 50px;
     width: 100%;
+
+    scroll-snap-type: x mandatory;
 
     &::-webkit-scrollbar {
         height: 10px;
@@ -141,15 +157,19 @@ const Content = styled.div`
         display: unset;
     }
 
+    /** 모바일에서 부드러운 스크롤을 위해 설정 */
+    -webkit-overflow-scrolling: touch;
+
 
     & .project{
         flex: 0 0 auto;
         transition: transform 0.3s ease-in-out;
         padding: 20px;
         z-index: 10;
+        scroll-snap-align: start;
         &:hover{
             transform: translateY(-20px);
-            border: 1px solid #fff;
+            /* border: 1px solid #fff; */
             border-radius: 30px;
         }
     }

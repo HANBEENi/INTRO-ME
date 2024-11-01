@@ -1,7 +1,7 @@
 import { media } from '@/styles/mediaQuery';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { LogoSVG, MoonSVG, SunSVG } from '@/public/svgs/HeaderSVG';
+import { BugerSVG, LogoSVG, MoonSVG, SunSVG } from '@/public/svgs/HeaderSVG';
 import { Link } from 'react-scroll';
 
 
@@ -18,7 +18,7 @@ const Header = ({isShowHeader}:any) => {
     return(
         <Layout isShowHeader={isShowHeader}>
             <HeaderContent>
-                <Logo onClick={()=>router.push(`/`)}>
+                <Logo onClick={()=>scrollToSection('home')}>
                     <LogoSVG/>
                 </Logo>
                 <MenuBar>
@@ -26,11 +26,17 @@ const Header = ({isShowHeader}:any) => {
                         <div className='modeName'>dark</div>
                         <div className='icon'><MoonSVG/></div>
                     </DarkMode>
-                    <li onClick={()=>scrollToSection('home')}>HOME</li>
-                    <li onClick={()=>scrollToSection('about')}>ABOUT</li>
-                    <li onClick={()=>scrollToSection('skills')}>SKILLS</li>
-                    <li onClick={()=>scrollToSection('projects')}>PROJECTS</li>
-                    <li onClick={()=>scrollToSection('contact')}>CONTACT</li>
+                    <MenuSet>
+                        <li onClick={()=>scrollToSection('home')}>HOME</li>
+                        <li onClick={()=>scrollToSection('about')}>ABOUT</li>
+                        <li onClick={()=>scrollToSection('skills')}>SKILLS</li>
+                        <li onClick={()=>scrollToSection('projects')}>PROJECTS</li>
+                        <li onClick={()=>scrollToSection('contact')}>CONTACT</li>
+                    </MenuSet>
+                    <div className='menuSet'>
+                        
+                    </div>
+                    <BurgerIcon><BugerSVG/></BurgerIcon>
                 </MenuBar>
             </HeaderContent>
         </Layout>
@@ -66,7 +72,7 @@ const HeaderContent = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    padding: 0 2.5%;
     width: 100%;
 `;
 
@@ -80,13 +86,34 @@ const Logo = styled.div`
     cursor: pointer;
 `;
 
-const MenuBar = styled.ul`
+const MenuBar = styled.div`
+    display: flex;
+    gap: 40px;
+
+    ${media.mobile, media.tablet}{
+        gap: 20px;
+    }
+`;
+
+const MenuSet = styled.ul`
     display: flex;
     align-items: center;
     gap: 40px;
 
     font-size: 1.25rem;
-
+    & > li {
+        list-style-type: none;
+        background: linear-gradient(to right, #2ebf91, #8368c3);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        
+        &:hover{
+            
+        }
+        cursor: pointer;
+    }
+    
     /** [TODO]임시 */
     & :nth-child(3), :nth-child(4), :nth-child(6){
         &:hover{
@@ -94,17 +121,21 @@ const MenuBar = styled.ul`
         }
     }
 
-    & > li {
-        list-style-type: none;
-        background: linear-gradient(to right, #2ebf91, #8368c3);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+    ${media.mobile, media.tablet}{
+        display: none;
+    }
+`;
 
-        &:hover{
-
-        }
+const BurgerIcon = styled.div`
+    display: none;
+    &:hover{
         cursor: pointer;
+    }
+
+    ${media.mobile, media.tablet}{
+        display: flex;
+        justify-content: end;
+        width: 100%;
     }
 `;
 
@@ -113,7 +144,7 @@ const DarkMode = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 5px 10px;
-    width: 110px;
+    min-width: 110px;
     height: 40px;
 
     background-color: #292929;

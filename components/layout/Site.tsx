@@ -27,8 +27,8 @@ import Home from '@/components/section/01-Home';
 import About from '@/components/section/02-About';
 import Skills from '@/components/section/03-Skills';
 import Projects from '@/components/section/04-Projects';
-import Contact from '@/components/section/06-Contact';
-import Footer from '@/components/section/07-Footer';
+import Contact from '@/components/section/05-Contact';
+import Footer from '@/components/section/06-Footer';
 import QuickAccessToggle from '@/components/section_modules/QuickAccessToggle';
 
 const SiteLayout = () => {
@@ -38,7 +38,8 @@ const SiteLayout = () => {
     const [isScreenTop, setIsScreenTop] = useState<boolean>(true);
     const [activeSection, setActiveSection] = useState<string>('home'); // 현재 활성화된 섹션 name
     const [sections, setSections] = useState(['home', 'about', 'skills', 'projects', 'contact', 'footer']);
-    
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+
     /** 화면 스크롤(Y축) 감지 */
     useEffect(() => {
         const handleScroll = throttle(() => {
@@ -90,7 +91,6 @@ const SiteLayout = () => {
                 </Toggle>
                 <div className="toggleBackground"/>
             </QuickToggle>
-            
         </Layout>
     );
 };
@@ -123,15 +123,16 @@ const Content = styled.div`
     height: 100vh;
     scroll-snap-type: y mandatory; // 수직 스크롤 스냅 설정
     overflow-y: scroll;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain; // 스크롤 넘침 동작 제어
 `;
 
 const Section = styled.div`
     scroll-snap-align: start; // 스크롤 스냅 포인트 설정
+    scroll-snap-stop: always;
     width: 100%;
     height: 100vh;
 `;
-
-
 
 const QuickToggle = styled.div`
 

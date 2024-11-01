@@ -26,7 +26,7 @@ import Home from '@/components/section/01-Home';
 import About from '@/components/section/02-About';
 import Skills from '@/components/section/03-Skills';
 import Projects from '@/components/section/04-Projects';
-import Contact from '@/components/section/06-Contact';
+import Contact from '@/components/section/05-Contact';
 import QuickAccessToggle from '@/components/section_modules/QuickAccessToggle';
 
 const SiteLayout = () => {

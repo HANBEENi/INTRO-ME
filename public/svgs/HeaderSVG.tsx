@@ -87,3 +87,25 @@ export const SunSVG = () => (
         </defs>
     </svg>
 )
+
+export const BugerSVG = () => (
+    <svg width="37" height="31" viewBox="0 0 37 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36.25" height="5.16667" rx="2.58333" fill="url(#paint0_linear_403_2500)"/>
+        <rect y="12.917" width="36.25" height="5.16667" rx="2.58333" fill="url(#paint1_linear_403_2500)"/>
+        <rect y="25.833" width="36.25" height="5.16667" rx="2.58333" fill="url(#paint2_linear_403_2500)"/>
+        <defs>
+        <linearGradient id="paint0_linear_403_2500" x1="0" y1="2.58333" x2="36.25" y2="2.58333" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#42C48E"/>
+        <stop offset="1" stop-color="#875EC5"/>
+        </linearGradient>
+        <linearGradient id="paint1_linear_403_2500" x1="0" y1="15.5003" x2="36.25" y2="15.5003" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#42C48E"/>
+        <stop offset="1" stop-color="#875EC5"/>
+        </linearGradient>
+        <linearGradient id="paint2_linear_403_2500" x1="0" y1="28.4163" x2="36.25" y2="28.4163" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#42C48E"/>
+        <stop offset="1" stop-color="#875EC5"/>
+        </linearGradient>
+        </defs>
+    </svg>
+)

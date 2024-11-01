@@ -3,11 +3,6 @@ import { throttle } from "lodash";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-
-/** [TODO]
- *  스크린top이 아니라, 각 섹션의 top으로 수정해야함
- */
-
 const Body = ({children}:any) => {
 
     const [preScrollY, setPreScrollY] = useState<number>(0);
@@ -25,7 +20,7 @@ const Body = ({children}:any) => {
             }
             setIsScreenTop(currentScrollY === 0);
             setPreScrollY(currentScrollY);
-        }, 200); // 100ms 간격으로 스크롤 이벤트 처리
+        }, 200); // 200ms 간격으로 스크롤 이벤트 처리
 
         window.addEventListener('scroll',handleScroll);
 
@@ -49,10 +44,8 @@ const Layout = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
     width: 100vw;
     height: 100%;
-
 
     ${media.tablet}{
         padding: 0px 20px;
@@ -67,6 +60,6 @@ const Content = styled.div<{isShowHeader:boolean}>`
     transition: padding-top 1s;
     max-width: 1200px;
     width: 100%;
-    min-height: calc(100vh + 1rem); // 헤더on,off시(스크롤) 화면이 조금 들려서 아래 부분 섹션이 보여서, 1rem 정도 높이 추가
-
+    height: 100vh;
+    overflow-y: scroll;
 `;

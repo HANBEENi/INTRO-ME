@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { Canvas, extend, useFrame, useLoader, useThree} from '@react-three/fiber';
 import { MeshReflectorMaterial, OrbitControls, PerspectiveCamera, RoundedBox, Text } from '@react-three/drei';
 import * as THREE from 'three';
+import { initial } from 'lodash';
 
 extend({GridHelper: THREE.GridHelper});
 
@@ -224,10 +225,15 @@ const Card = ({isAction}:any) => {
 const Dark_Card3D = ({isAction}:any) => {
   
   const controlRef = useRef<any>(null);
- 
-  const handleEndDrag = useCallback(async() => {
+  const [isHandleEnd, setIsHandleEnd] = useState<boolean>(false);
+  const preCameraPosition = useRef<[number, number, number]>([0, 0, 0]);
+
+  const handleEndDrag = useCallback(async(cameraPosition: [number, number, number]) => {
     if (controlRef.current) {
-      controlRef.current.reset(); // 카메라 상태를 초기화
+      setIsHandleEnd(true);
+      // controlRef.current.reset(); // 카메라 상태를 초기화
+      controlRef.current.object.position.set(...cameraPosition); // 카메라 위치 설정
+      controlRef.current.update(); // 카메라 업데이트
     }
   }, []);
 
@@ -239,7 +245,12 @@ const Dark_Card3D = ({isAction}:any) => {
       const aspect = size.width / size.height;
       const distance = aspect > 1 ? 11.5 : 11.5 * (1 / aspect);
       camera.position.set(0, 0, distance);
-    }, [size, camera]);
+      setIsHandleEnd(false);
+      const cameraPosition: [number, number, number] = [0, 0, distance];
+      preCameraPosition.current = cameraPosition; // 초기 카메라 위치 저장
+      handleEndDrag(cameraPosition);
+
+    }, [size, camera, isHandleEnd]);
 
     return null;
   };
@@ -255,7 +266,7 @@ const Dark_Card3D = ({isAction}:any) => {
       <OrbitControls
         ref={controlRef}
         enableZoom={false}
-        onEnd={handleEndDrag}
+        onEnd={()=>handleEndDrag(preCameraPosition.current)}
         enableDamping={false}
         maxPolarAngle={Math.PI} // 수직 회전의 최대 각도 제한
         minPolarAngle={0} // 수직 회전의 최소 각도 제한
