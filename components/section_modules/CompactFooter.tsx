@@ -12,6 +12,15 @@ import {
 import { media } from "@/styles/mediaQuery";
 
 const CompactFooter = () => {
+  const handleClick = () => {
+    const recipient = "been.iruda@gmail.com"; // 받는 사람 이메일 주소
+    const subject = "문의 사항"; // 이메일 제목
+    const body = "여기에 내용을 입력하세요."; // 이메일 본문 내용
+
+    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
   return (
     <Layout>
       <Notice>
@@ -23,7 +32,7 @@ const CompactFooter = () => {
           <div className="item">
             <EmailSVG />
           </div>
-          <div className="hoverItem">
+          <div className="hoverItem" onClick={handleClick}>
             <EmailHoverSVG />
             <div className="tooltip">
               <span>메일 보내기</span>
