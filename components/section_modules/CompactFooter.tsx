@@ -12,7 +12,10 @@ import {
 import { media } from "@/styles/mediaQuery";
 
 const CompactFooter = () => {
-  const handleClick = () => {
+  const handleOpenLink = (Link: string) => {
+    window.open(Link, "_blank");
+  };
+  const handleOpenEmailForm = () => {
     const recipient = "been.iruda@gmail.com"; // 받는 사람 이메일 주소
     const subject = "문의 사항"; // 이메일 제목
     const body = "여기에 내용을 입력하세요."; // 이메일 본문 내용
@@ -32,7 +35,7 @@ const CompactFooter = () => {
           <div className="item">
             <EmailSVG />
           </div>
-          <div className="hoverItem" onClick={handleClick}>
+          <div className="hoverItem" onClick={handleOpenEmailForm}>
             <EmailHoverSVG />
             <div className="tooltip">
               <span>메일 보내기</span>
@@ -43,7 +46,12 @@ const CompactFooter = () => {
           <div className="item">
             <OpenKaKaoSVG />
           </div>
-          <div className="hoverItem">
+          <div
+            className="hoverItem"
+            onClick={() =>
+              handleOpenLink("https://open.kakao.com/me/beeniruda")
+            }
+          >
             <OpenKaKaoHoverSVG />
             <div className="tooltip">
               <span>오픈카카오 바로가기</span>
@@ -54,7 +62,10 @@ const CompactFooter = () => {
           <div className="item">
             <GithubSVG />
           </div>
-          <div className="hoverItem">
+          <div
+            className="hoverItem"
+            onClick={() => handleOpenLink("https://github.com/HANBEENi")}
+          >
             <GithubHoverSVG />
             <div className="tooltip">
               <span>깃헙 바로가기</span>
@@ -65,7 +76,14 @@ const CompactFooter = () => {
           <div className="item">
             <NotionSVG />
           </div>
-          <div className="hoverItem">
+          <div
+            className="hoverItem"
+            onClick={() =>
+              handleOpenLink(
+                "https://www.notion.so/51d4c45165fc46b880a046c345df9fd5?pvs=4"
+              )
+            }
+          >
             <NotionHoverSVG />
             <div className="tooltip">
               <span>노션 바로가기</span>
