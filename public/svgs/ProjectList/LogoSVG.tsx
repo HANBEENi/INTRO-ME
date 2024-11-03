@@ -27,8 +27,8 @@ export const HB_PORTFOLIO_LogoSVG = () => (
         y2="15.5973"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#2EBF91" />
-        <stop offset="1" stop-color="#8368C3" />
+        <stop stopColor="#2EBF91" />
+        <stop offset="1" stopColor="#8368C3" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_253_3906"
@@ -38,8 +38,8 @@ export const HB_PORTFOLIO_LogoSVG = () => (
         y2="16.4173"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#2EBF91" />
-        <stop offset="1" stop-color="#8368C3" />
+        <stop stopColor="#2EBF91" />
+        <stop offset="1" stopColor="#8368C3" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_253_3906"
@@ -49,8 +49,8 @@ export const HB_PORTFOLIO_LogoSVG = () => (
         y2="26.6605"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#2EBF91" />
-        <stop offset="1" stop-color="#8368C3" />
+        <stop stopColor="#2EBF91" />
+        <stop offset="1" stopColor="#8368C3" />
       </linearGradient>
     </defs>
   </svg>

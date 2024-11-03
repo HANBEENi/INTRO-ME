@@ -283,7 +283,9 @@ const Banner = styled.div`
   overflow: hidden;
 `;
 
-const Slides = styled.div<{ currentBanner: number }>`
+const Slides = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "currentBanner",
+})<{ currentBanner: number }>`
   display: flex;
   width: 100%;
   height: 100%;
@@ -302,7 +304,9 @@ const Slide = styled.div`
   background-position: center;
 `;
 
-const Title = styled.div<{ isShowHeader: boolean }>`
+const Title = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isShowHeader",
+})<{ isShowHeader: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,7 +356,9 @@ const TitleText = styled.div<{ delay: number }>`
   }
 `;
 
-const GreetingText = styled.div<{ isShowHeader: boolean }>`
+const GreetingText = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isShowHeader",
+})<{ isShowHeader: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -9,14 +9,14 @@ export const ExitSVG = () => (
     <path
       d="M44.1415 44.1419L15.8572 15.8576"
       stroke="black"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
     />
     <path
       d="M44.1428 15.8576L15.8585 44.1419"
       stroke="black"
-      stroke-width="2"
-      stroke-linecap="round"
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -105,8 +105,8 @@ export const NotionSVG = () => (
         y2="11.3324"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#42C48E" />
-        <stop offset="1" stop-color="#875EC5" />
+        <stop stopColor="#42C48E" />
+        <stop offset="1" stopColor="#875EC5" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_1_21053"
@@ -116,8 +116,8 @@ export const NotionSVG = () => (
         y2="2.66848"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#875EC5" />
-        <stop offset="1" stop-color="#42C48E" />
+        <stop stopColor="#875EC5" />
+        <stop offset="1" stopColor="#42C48E" />
       </linearGradient>
     </defs>
   </svg>
@@ -159,8 +159,8 @@ export const GithubSVG = () => (
         y2="10.6551"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#875EC5" />
-        <stop offset="1" stop-color="#2EBF91" />
+        <stop stopColor="#875EC5" />
+        <stop offset="1" stopColor="#2EBF91" />
       </linearGradient>
     </defs>
   </svg>

@@ -86,7 +86,9 @@ const Layout = styled.div`
   width: 100%;
 `;
 
-const Title = styled.div<{ titleBackground: string }>`
+const Title = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "titleBackground",
+})<{ titleBackground: string }>`
   display: flex;
   align-items: center;
   justify-content: center;

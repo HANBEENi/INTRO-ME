@@ -117,7 +117,9 @@ const toggleBackground = keyframes`
     }
 `;
 
-const Layout = styled.div<{ isShowHeader: boolean }>`
+const Layout = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isShowHeader",
+})<{ isShowHeader: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -164,7 +166,9 @@ const QuickToggle = styled.div`
   }
 `;
 
-const Toggle = styled.div<{ isScreenTop: boolean }>`
+const Toggle = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isScreenTop",
+})<{ isScreenTop: boolean }>`
   position: fixed;
   bottom: ${({ isScreenTop }) => (isScreenTop ? "20px" : "50px")};
   right: 2.5%;

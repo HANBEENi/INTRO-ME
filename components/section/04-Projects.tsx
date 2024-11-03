@@ -123,7 +123,9 @@ const InLayout = styled.div`
   overflow-y: scroll;
 `;
 
-const Container = styled.div<{ isDetailViewOpen: boolean }>`
+const Container = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isDetailViewOpen",
+})<{ isDetailViewOpen: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -216,7 +218,10 @@ const Wrap = styled.div`
   }
 `;
 
-const Content = styled.div<{
+const Content = styled.div.withConfig({
+  shouldForwardProp: (prop) =>
+    !["projectQuantity", "isOpenDetailView"].includes(prop),
+})<{
   projectQuantity: number;
   isOpenDetailView: boolean;
 }>`

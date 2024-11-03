@@ -51,7 +51,9 @@ const Layout = styled.div`
   }
 `;
 
-const Content = styled.div<{ isShowHeader: boolean }>`
+const Content = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isShowHeader",
+})<{ isShowHeader: boolean }>`
   display: flex;
   padding-top: ${({ isShowHeader }) => (isShowHeader ? "150px" : "100px")};
   padding-bottom: 100px;
