@@ -104,7 +104,6 @@ const Layout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
 
   width: 100vw;
   height: 100vh;
@@ -222,12 +221,16 @@ const Content = styled.div<{
   isOpenDetailView: boolean;
 }>`
   display: flex;
+  align-items: center;
   gap: 0 50px;
-  width: ${({ projectQuantity }) =>
-    `calc((370px + 50px) * ${projectQuantity})`};
   padding: 20px;
   overflow-x: hidden; //자동슬라이드위함
   position: relative; //자동슬라이드 애니메이션 적용할 기준 위치
+
+  width: ${({ projectQuantity }) =>
+    `calc((370px + 50px) * ${projectQuantity})`};
+  height: 100%;
+  /* background: #fff; */
 
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
