@@ -69,7 +69,7 @@ const ProjectCard = ({ data, setIsOpenDetailView }: any) => {
           </div>
         </Bottom>
       </Card>
-      <Description>{data.description}</Description>
+      {/* <Description>{data.description}</Description> */}
     </Layout>
   );
 };

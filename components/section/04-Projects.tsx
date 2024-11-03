@@ -1,12 +1,13 @@
 import Body from "@/components/layout/Body";
 import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ProjectCard from "@/components/section_modules/04-Projects/ProjectCard";
 import { media } from "@/styles/mediaQuery";
 import { PROJECT_DATA } from "@/data/ProjectData";
 import ProjectDetail from "../section_modules/04-Projects/ProjectDetail";
 
 const Projects = () => {
+  const projects = [...PROJECT_DATA, ...PROJECT_DATA, ...PROJECT_DATA];
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -63,8 +64,12 @@ const Projects = () => {
           </Title>
         </Container>
       </InLayout>
-      <Content ref={contentRef}>
-        {PROJECT_DATA.map((project: any, idx: number) => (
+      <Content
+        ref={contentRef}
+        projectQuantity={projects.length}
+        isOpenDetailView={isOpenDetailView}
+      >
+        {projects.map((project: any, idx: number) => (
           <div className="project" key={idx}>
             <ProjectCard
               data={project}
@@ -86,12 +91,21 @@ const Projects = () => {
 
 export default Projects;
 
+const slide = keyframes`
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(calc(-100% / 3));
+      }
+`;
+
 const Layout = styled.div`
   display: flex;
-  /* position: relative; */
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 20px;
+
   width: 100vw;
   height: 100vh;
 
@@ -203,13 +217,17 @@ const Wrap = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{
+  projectQuantity: number;
+  isOpenDetailView: boolean;
+}>`
   display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 70px 50px;
-  width: 90%;
+  gap: 0 50px;
+  width: ${({ projectQuantity }) =>
+    `calc((370px + 50px) * ${projectQuantity})`};
   padding: 20px;
+  overflow-x: hidden; //자동슬라이드위함
+  position: relative; //자동슬라이드 애니메이션 적용할 기준 위치
 
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
@@ -217,12 +235,20 @@ const Content = styled.div`
   /** 모바일에서 부드러운 스크롤을 위해 설정 */
   -webkit-overflow-scrolling: touch;
 
+  animation: ${slide} 50s linear infinite;
+  animation-play-state: ${({ isOpenDetailView }) =>
+    isOpenDetailView ? "paused" : "unset"};
+
+  &:hover {
+    animation-play-state: paused;
+  }
+
   & .project {
-    flex: 0 0 auto;
+    display: flex;
     transition: transform 0.3s ease-in-out;
-    padding: 20px;
     z-index: 10;
     scroll-snap-align: start;
+
     &:hover {
       transform: translateY(-20px);
       border-radius: 30px;
