@@ -14,7 +14,7 @@ interface Props {
   description: string;
 }
 
-const ProjectCard = ({ data }: any) => {
+const ProjectCard = ({ data, setIsOpenDetailView }: any) => {
   const handleOpenLink = (link: string) => {
     window.open(link, "_blank");
   };
@@ -44,7 +44,10 @@ const ProjectCard = ({ data }: any) => {
         </Top>
         <Middle>
           <div className="logo">{data.logo}</div>
-          <div className="detailViewButton">
+          <div
+            className="detailViewButton"
+            onClick={() => setIsOpenDetailView(true)}
+          >
             <span>상세 보기</span>
           </div>
         </Middle>

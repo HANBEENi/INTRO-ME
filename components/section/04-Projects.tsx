@@ -1,13 +1,16 @@
 import Body from "@/components/layout/Body";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import ProjectCard from "@/components/section_modules/ProjectCard";
+import ProjectCard from "@/components/section_modules/04-Projects/ProjectCard";
 import { media } from "@/styles/mediaQuery";
 import { PROJECT_DATA } from "@/data/ProjectData";
+import ProjectDetail from "../section_modules/04-Projects/ProjectDetail";
 
 const Projects = () => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+
+  const [isOpenDetailView, setIsOpenDetailView] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -28,43 +31,94 @@ const Projects = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // DetailView가 열릴 때 body의 스크롤 정지
+    if (isOpenDetailView) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = ""; // 컴포넌트 언마운트 시 원상복구
+    };
+  }, [isOpenDetailView]);
+
   return (
-    <Body>
-      <Container ref={sectionRef}>
-        <Title>
-          <Wrap>
-            <div className="about">PROJECTS</div>
-            <div className="line"></div>
-            <div className="subTitleEn">
-              <div className="dot" style={{ backgroundColor: "#2EBF91" }} />
-              <div>PROJECTS</div>
-            </div>
-          </Wrap>
-          <Wrap>
-            <div className="dotWrap"></div>
-            {/* <div className="subTitleKo" style={{color: '#2EBF91'}}>프로젝트 보기</div> */}
-          </Wrap>
-        </Title>
-        <Content ref={contentRef}>
-          {PROJECT_DATA.map((project: any, idx: number) => (
-            <div className="project" key={idx}>
-              <ProjectCard data={project} />
-            </div>
-          ))}
-        </Content>
-      </Container>
-    </Body>
+    <Layout>
+      <InLayout>
+        <Container ref={sectionRef} isDetailViewOpen={isOpenDetailView}>
+          <Title>
+            <Wrap>
+              <div className="about">PROJECTS</div>
+              <div className="line"></div>
+              <div className="subTitleEn">
+                <div className="dot" style={{ backgroundColor: "#2EBF91" }} />
+                <div>PROJECTS</div>
+              </div>
+            </Wrap>
+            <Wrap>
+              <div className="dotWrap"></div>
+            </Wrap>
+          </Title>
+        </Container>
+      </InLayout>
+      <Content ref={contentRef}>
+        {PROJECT_DATA.map((project: any, idx: number) => (
+          <div className="project" key={idx}>
+            <ProjectCard
+              data={project}
+              setIsOpenDetailView={setIsOpenDetailView}
+            />
+          </div>
+        ))}
+      </Content>
+      {isOpenDetailView ? (
+        <DetailView>
+          <ProjectDetail setIsOpenDetailView={setIsOpenDetailView} />
+        </DetailView>
+      ) : (
+        ""
+      )}
+    </Layout>
   );
 };
 
 export default Projects;
 
-const Container = styled.div`
+const Layout = styled.div`
+  display: flex;
+  /* position: relative; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  ${media.tablet} {
+    padding: 0px 20px;
+    box-sizing: border-box;
+  }
+`;
+
+const InLayout = styled.div`
+  display: flex;
+  padding-top: 150px;
+  transition: padding-top 1s;
+  max-width: 1200px;
+  width: 100%;
+  overflow-y: scroll;
+`;
+
+const Container = styled.div<{ isDetailViewOpen: boolean }>`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+
+  /* DetailView가 열릴 때 pointer-events를 비활성화하여 이벤트 차단 */
+  pointer-events: ${({ isDetailViewOpen }) =>
+    isDetailViewOpen ? "none" : "auto"};
 `;
 
 const Title = styled.div`
@@ -154,8 +208,7 @@ const Content = styled.div`
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 70px 50px;
-  width: 100%;
-  height: 100%;
+  width: 90%;
   padding: 20px;
 
   scroll-snap-type: x mandatory;
@@ -175,4 +228,22 @@ const Content = styled.div`
       border-radius: 30px;
     }
   }
+`;
+
+const DetailView = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3000;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #0000007b;
+
+  pointer-events: auto; /* DetailView 안에서는 이벤트를 활성화 */
 `;
