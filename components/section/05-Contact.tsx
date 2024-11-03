@@ -26,6 +26,19 @@ const Contact = () => {
     }
   };
 
+  const handleOpenLink = (Link: string) => {
+    window.open(Link, "_blank");
+  };
+  const handleOpenEmailForm = () => {
+    const recipient = "been.iruda@gmail.com"; // 받는 사람 이메일 주소
+    const subject = "문의 사항"; // 이메일 제목
+    const body = "여기에 내용을 입력하세요."; // 이메일 본문 내용
+
+    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
   useEffect(() => {
     textRefs.current.forEach((text, index) => {
       gsap.fromTo(
@@ -91,13 +104,6 @@ const Contact = () => {
 
   return (
     <Container ref={sectionRef}>
-      {/* <Title>
-                    <div>CONTACT</div>
-                    <div>
-                        문의사항이나 제안이 있으시다면 언제든지 연락해주세요!
-                        함께 일할 기회를 기대하고 있습니다.
-                    </div>
-                </Title> */}
       <Title>
         <Wrap>
           <div className="about">CONTACT</div>
@@ -109,7 +115,6 @@ const Contact = () => {
         </Wrap>
         <Wrap>
           <div className="dotWrap"></div>
-          {/* <div className="subTitleKo" style={{color: '#2EBF91'}}>프로젝트 보기</div> */}
         </Wrap>
       </Title>
       <Contents>
@@ -128,6 +133,7 @@ const Contact = () => {
       </Contents>
       <HowContect>
         <div
+          onClick={handleOpenEmailForm}
           style={{
             background: "linear-gradient(135deg, #a8e063, #56ab2f)",
             color: "#fff",
@@ -136,6 +142,7 @@ const Contact = () => {
           E-mail
         </div>
         <div
+          onClick={() => handleOpenLink("https://github.com/HANBEENi")}
           style={{
             background: "linear-gradient(135deg, #6e6e6e, #3e3e3e)",
             color: "#fff",
@@ -144,6 +151,11 @@ const Contact = () => {
           GitHub
         </div>
         <div
+          onClick={() =>
+            handleOpenLink(
+              "https://www.notion.so/51d4c45165fc46b880a046c345df9fd5?pvs=4"
+            )
+          }
           style={{
             background: "linear-gradient(135deg, #d5d5d5, #9e9e9e)",
             color: "#fff",
@@ -152,6 +164,7 @@ const Contact = () => {
           Notion
         </div>
         <div
+          onClick={() => handleOpenLink("https://open.kakao.com/me/beeniruda")}
           style={{
             background: "linear-gradient(135deg, #ffcc00, #ff9900)",
             color: "#fff",
